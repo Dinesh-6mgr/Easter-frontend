@@ -1,10 +1,12 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaGamepad, FaTrophy, FaHistory } from 'react-icons/fa';
+import { FaGamepad, FaTrophy, FaHistory, FaCrown } from 'react-icons/fa';
 import { GiEasterEgg } from 'react-icons/gi';
 import { getCurrentEasterMessage } from '../utils/dateMessages';
 import Button from '../components/common/Button';
 import VerseCard from '../components/common/VerseCard';
+import leaderboardService from '../services/leaderboardService';
 import { useLanguage } from '../context/LanguageContext';
 
 const featureIcons = [
@@ -13,10 +15,19 @@ const featureIcons = [
   { icon: <FaTrophy className="w-6 h-6 sm:w-8 sm:h-8" />,  color: 'from-yellow-400 to-red-400',   link: '/leaderboard' },
 ];
 
+const rankColor = (i) => ['text-yellow-400', 'text-gray-400', 'text-amber-600'][i] ?? 'text-gray-500';
+
 const Home = () => {
   const { t } = useLanguage();
   const { message } = getCurrentEasterMessage();
   const features = t('home.features');
+  const [scores, setScores] = useState([]);
+
+  useEffect(() => {
+    leaderboardService.getTopScores()
+      .then((res) => setScores(res.data || []))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -146,6 +157,97 @@ const Home = () => {
           <Link to="/game"><Button variant="secondary" size="lg">{t('home.playNow')}</Button></Link>
         </motion.div>
       </section>
+
+      {/* Leaderboard preview */}
+      {scores.length > 0 && (
+        <section className="py-10 sm:py-16 px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="max-w-2xl mx-auto"
+          >
+            <div className="flex items-center justify-between mb-5 sm:mb-8">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <FaTrophy className="w-5 h-5 sm:w-7 sm:h-7 text-yellow-400" />
+                <h2 className="text-xl sm:text-3xl font-bold">{t('leaderboard.title')}</h2>
+              </div>
+              <Link to="/leaderboard">
+                <Button variant="ghost" size="sm">{t('home.explore')}</Button>
+              </Link>
+            </div>
+
+            {/* Top 3 podium */}
+            <div className="flex justify-center items-end gap-2 sm:gap-4 mb-6">
+              {scores[1] && (
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-center">
+                  <FaCrown className="w-4 h-4 sm:w-6 sm:h-6 text-gray-400 mx-auto mb-1" />
+                  <div className="bg-gray-200 dark:bg-gray-700 rounded-t-xl p-2 sm:p-3 w-16 sm:w-24">
+                    <p className="font-bold text-[10px] sm:text-xs truncate">{scores[1].name}</p>
+                    <p className="text-base sm:text-xl font-bold">{scores[1].score}</p>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-gray-500 mt-1">2nd</p>
+                </motion.div>
+              )}
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0 }} className="text-center">
+                <FaCrown className="w-5 h-5 sm:w-8 sm:h-8 text-yellow-400 mx-auto mb-1" />
+                <div className="bg-gradient-to-t from-yellow-400 to-yellow-300 rounded-t-xl p-3 sm:p-5 w-20 sm:w-28">
+                  <p className="font-bold text-white text-[10px] sm:text-sm truncate">{scores[0].name}</p>
+                  <p className="text-xl sm:text-3xl font-bold text-white">{scores[0].score}</p>
+                </div>
+                <p className="text-[10px] sm:text-xs font-semibold text-yellow-500 mt-1">1st 🏆</p>
+              </motion.div>
+              {scores[2] && (
+                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-center">
+                  <FaCrown className="w-4 h-4 sm:w-6 sm:h-6 text-amber-600 mx-auto mb-1" />
+                  <div className="bg-amber-100 dark:bg-amber-900/50 rounded-t-xl p-2 sm:p-3 w-16 sm:w-24">
+                    <p className="font-bold text-[10px] sm:text-xs truncate">{scores[2].name}</p>
+                    <p className="text-base sm:text-xl font-bold text-amber-800 dark:text-amber-200">{scores[2].score}</p>
+                  </div>
+                  <p className="text-[10px] sm:text-xs text-gray-500 mt-1">3rd</p>
+                </motion.div>
+              )}
+            </div>
+
+            {/* Top 5 list */}
+            <div className="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm">
+              <table className="w-full text-sm bg-white dark:bg-gray-800">
+                <thead>
+                  <tr className="border-b border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    <th className="px-4 py-3 text-left">#</th>
+                    <th className="px-4 py-3 text-left">{t('leaderboard.name')}</th>
+                    <th className="px-4 py-3 text-left hidden sm:table-cell">{t('leaderboard.church')}</th>
+                    <th className="px-4 py-3 text-right">{t('leaderboard.score')}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {scores.slice(0, 5).map((entry, i) => (
+                    <motion.tr key={entry._id}
+                      initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                      className={`border-b border-gray-100 dark:border-gray-700/50 last:border-0 ${i < 3 ? 'bg-yellow-50/40 dark:bg-yellow-900/10' : ''}`}
+                    >
+                      <td className="px-4 py-3">
+                        {i < 3
+                          ? <FaCrown className={`w-4 h-4 ${rankColor(i)}`} />
+                          : <span className={`font-mono font-bold text-xs ${rankColor(i)}`}>{i + 1}</span>
+                        }
+                      </td>
+                      <td className="px-4 py-3 font-medium truncate max-w-[100px] sm:max-w-none">{entry.name}</td>
+                      <td className="px-4 py-3 text-gray-500 dark:text-gray-400 truncate hidden sm:table-cell">{entry.church}</td>
+                      <td className={`px-4 py-3 text-right font-bold ${rankColor(i)}`}>{entry.score}</td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="text-center mt-4">
+              <Link to="/leaderboard">
+                <Button variant="outline" size="sm">{t('leaderboard.title')} →</Button>
+              </Link>
+            </div>
+          </motion.div>
+        </section>
+      )}
     </div>
   );
 };

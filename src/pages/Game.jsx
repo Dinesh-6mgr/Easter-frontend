@@ -43,7 +43,7 @@ const Game = () => {
       <div className="max-w-6xl mx-auto flex flex-col xl:flex-row gap-4 xl:gap-6 items-start">
 
         {/* ── Left: game column ── */}
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 w-full">
           {/* Stats bar */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-6">
             <div className="col-span-2 sm:col-span-1">
@@ -150,7 +150,7 @@ const Game = () => {
           </div>
         </div>
 
-        {/* ── Right: dashboard panel ── */}
+        {/* ── Right: dashboard panel — collapsible on mobile ── */}
         <div className="w-full xl:w-64 shrink-0">
           <GameDashboard
             score={score}

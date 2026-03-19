@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 
 const STYLES = {
-  golden:  { emoji: '🥚', label: 'Golden Egg', size: '3rem'   },
-  bomb:    { emoji: '💣', label: 'Bomb',        size: '2.8rem' },
-  normal:  { emoji: '🥚', label: 'Egg',         size: '2.5rem' },
-  rainbow: { emoji: '🌈', label: 'Rainbow Egg', size: '3.2rem' },
-  freeze:  { emoji: '❄️', label: 'Freeze',      size: '3rem'   },
+  golden:  { emoji: '🥚', label: 'Golden Egg', size: '2.2rem'  },
+  bomb:    { emoji: '💣', label: 'Bomb',        size: '2rem'   },
+  normal:  { emoji: '🥚', label: 'Egg',         size: '1.8rem' },
+  rainbow: { emoji: '🌈', label: 'Rainbow Egg', size: '2.4rem' },
+  freeze:  { emoji: '❄️', label: 'Freeze',      size: '2.2rem' },
 };
 
 const lifespanAt = (level) => Math.max(2500, 4000 - (level - 1) * 350);
