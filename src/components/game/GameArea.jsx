@@ -31,7 +31,7 @@ const ScorePop = ({ pop }) => {
 };
 
 const GameArea = ({ eggs, onEggClick, isPlaying, frozen, flashType, scorePops = [], combo }) => (
-  <div className="relative bg-gradient-to-b from-sky-300 via-sky-200 to-green-200 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 rounded-3xl min-h-[320px] sm:min-h-[420px] md:min-h-[480px] overflow-hidden select-none shadow-2xl">
+  <div className="relative bg-gradient-to-b from-sky-300 via-sky-200 to-green-200 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 rounded-3xl min-h-[260px] sm:min-h-[420px] md:min-h-[480px] overflow-hidden select-none shadow-2xl">
 
     {/* Screen flash overlay */}
     <AnimatePresence>
@@ -118,10 +118,10 @@ const GameArea = ({ eggs, onEggClick, isPlaying, frozen, flashType, scorePops = 
       >
         <div className="text-center text-white px-4">
           <motion.p animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
-            className="text-6xl mb-4">🥚</motion.p>
-          <h3 className="text-3xl font-bold mb-2">Ready to Hunt?</h3>
-          <p className="text-lg opacity-80">Click Start Game to begin!</p>
-          <div className="flex justify-center gap-3 mt-4 text-sm opacity-70">
+            className="text-4xl sm:text-6xl mb-3 sm:mb-4">🥚</motion.p>
+          <h3 className="text-xl sm:text-3xl font-bold mb-1 sm:mb-2">Ready to Hunt?</h3>
+          <p className="text-sm sm:text-lg opacity-80">Click Start Game to begin!</p>
+          <div className="flex justify-center gap-2 sm:gap-3 mt-3 sm:mt-4 text-xs sm:text-sm opacity-70">
             <span>🌈 Rainbow = +10</span>
             <span>❄️ Freeze = Stop time!</span>
           </div>

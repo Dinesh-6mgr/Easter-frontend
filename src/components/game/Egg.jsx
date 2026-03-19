@@ -1,17 +1,20 @@
 import { motion } from 'framer-motion';
 
 const STYLES = {
-  golden:  { emoji: '🥚', label: 'Golden Egg', size: '2.2rem'  },
-  bomb:    { emoji: '💣', label: 'Bomb',        size: '2rem'   },
-  normal:  { emoji: '🥚', label: 'Egg',         size: '1.8rem' },
-  rainbow: { emoji: '🌈', label: 'Rainbow Egg', size: '2.4rem' },
-  freeze:  { emoji: '❄️', label: 'Freeze',      size: '2.2rem' },
+  golden:  { emoji: '🥚', label: 'Golden Egg', mobileSize: '1.4rem', size: '2.2rem'  },
+  bomb:    { emoji: '💣', label: 'Bomb',        mobileSize: '1.3rem', size: '2rem'   },
+  normal:  { emoji: '🥚', label: 'Egg',         mobileSize: '1.2rem', size: '1.8rem' },
+  rainbow: { emoji: '🌈', label: 'Rainbow Egg', mobileSize: '1.5rem', size: '2.4rem' },
+  freeze:  { emoji: '❄️', label: 'Freeze',      mobileSize: '1.4rem', size: '2.2rem' },
 };
+
+const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 640;
 
 const lifespanAt = (level) => Math.max(2500, 4000 - (level - 1) * 350);
 
 const Egg = ({ egg, onClick }) => {
-  const { emoji, label, size } = STYLES[egg.type] || STYLES.normal;
+  const { emoji, label, size, mobileSize } = STYLES[egg.type] || STYLES.normal;
+  const fontSize = isMobile() ? mobileSize : size;
   const lifespan = lifespanAt(egg.level ?? 1);
   const progress = Math.min((Date.now() - egg.createdAt) / lifespan, 1);
 
@@ -37,7 +40,7 @@ const Egg = ({ egg, onClick }) => {
         left: `${egg.x}%`,
         top: `${egg.y}%`,
         transform: 'translate(-50%, -50%)',
-        fontSize: size,
+        fontSize,
         cursor: 'pointer',
         userSelect: 'none',
         background: 'none',
