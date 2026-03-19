@@ -3,15 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 
-const getRandomPos = () => {
-  // Smaller range on mobile to keep button visible
-  const range = window.innerWidth < 640 ? 100 : 260;
-  return {
-    x: (Math.random() - 0.5) * range,
-    y: (Math.random() - 0.5) * 120,
-  };
-};
-
 const noMessages = {
   en: [
     "Still thinking? That's okay 😄",
@@ -52,6 +43,25 @@ const gameUi = {
   },
 };
 
+// Radius shrinks each click so No spirals inward toward Yes
+const getOrbitRadius = (attempts) => Math.max(130 - attempts * 12, 0);
+
+// No shrinks each click, min 0.4
+const getNoScale = (attempts) => Math.max(1 - attempts * 0.1, 0.4);
+
+// Yes grows each click, max 1.65
+const getYesScale = (attempts) => Math.min(1 + attempts * 0.08, 1.65);
+
+// Pick a random angle that is at least 100° away from the last one
+const nextAngle = (last) => {
+  const MIN_DIFF = (100 / 180) * Math.PI;
+  let a;
+  do {
+    a = Math.random() * 2 * Math.PI;
+  } while (Math.min(Math.abs(a - last), 2 * Math.PI - Math.abs(a - last)) < MIN_DIFF);
+  return a;
+};
+
 const JourneyGame = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -59,11 +69,11 @@ const JourneyGame = () => {
   const t = gameUi[lang] ?? gameUi.en;
   const msgs = noMessages[lang] ?? noMessages.en;
   const [attempts, setAttempts] = useState(0);
-  const [noPos, setNoPos] = useState({ x: 0, y: 0 });
+  const [angle, setAngle] = useState(0); // start on the right
 
-  const handleNoHover = useCallback(() => {
-    setNoPos(getRandomPos());
+  const handleNo = useCallback(() => {
     setAttempts((a) => a + 1);
+    setAngle((prev) => nextAngle(prev));
   }, []);
 
   const handleYes = () => {
@@ -73,6 +83,12 @@ const JourneyGame = () => {
 
   const msgIndex = Math.min(attempts - 1, msgs.length - 1);
   const message = attempts > 0 ? msgs[msgIndex] : null;
+
+  const radius = getOrbitRadius(attempts);
+  const noScale = getNoScale(attempts);
+  const yesScale = getYesScale(attempts);
+  const noX = Math.cos(angle) * radius;
+  const noY = Math.sin(angle) * radius * 0.65; // slight ellipse
 
   return (
     <motion.div
@@ -138,23 +154,29 @@ const JourneyGame = () => {
         </div>
 
         {/* Buttons arena */}
-        <div className="relative flex items-center justify-center gap-8 h-32">
-          {/* YES */}
+        <div className="relative flex items-center justify-center" style={{ height: 220 }}>
+
+          {/* YES — centered, grows bigger, always on top */}
           <motion.button
-            whileHover={{ scale: 1.1, boxShadow: '0 0 32px rgba(139,92,246,0.5)' }}
-            whileTap={{ scale: 0.95 }}
+            animate={{ scale: yesScale }}
+            transition={{ type: 'spring', stiffness: 220, damping: 14 }}
+            whileHover={{ boxShadow: '0 0 40px rgba(139,92,246,0.6)' }}
+            whileTap={{ scale: yesScale * 0.93 }}
             onClick={handleYes}
-            className="relative z-10 px-9 py-4 bg-gradient-to-r from-easter-purple to-easter-pink text-white font-extrabold rounded-full shadow-xl text-base sm:text-lg"
+            style={{ position: 'relative', zIndex: 20 }}
+            className="px-9 py-4 bg-gradient-to-r from-easter-purple to-easter-pink text-white font-extrabold rounded-full shadow-xl text-base sm:text-lg"
           >
             {t.yesBtn}
           </motion.button>
 
+          {/* NO — random spot on shrinking circle, always behind Yes */}
           <motion.button
-            animate={{ x: noPos.x, y: noPos.y }}
-            transition={{ type: 'spring', stiffness: 280, damping: 18 }}
-            onHoverStart={handleNoHover}
-            onTouchStart={handleNoHover}
-            className="px-7 py-4 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold rounded-full shadow text-base sm:text-lg cursor-pointer select-none border border-gray-200 dark:border-gray-600"
+            animate={{ x: noX, y: noY, scale: noScale }}
+            transition={{ type: 'spring', stiffness: 240, damping: 18 }}
+            onClick={handleNo}
+            onTouchStart={handleNo}
+            style={{ position: 'absolute', zIndex: 5 }}
+            className="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold rounded-full shadow text-sm cursor-pointer select-none border border-gray-200 dark:border-gray-600 whitespace-nowrap"
           >
             {t.noBtn}
           </motion.button>
@@ -166,7 +188,7 @@ const JourneyGame = () => {
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800"
+              className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800"
             >
               <span className="text-xs text-amber-600 dark:text-amber-400 font-semibold">
                 {t.attempts(attempts)}

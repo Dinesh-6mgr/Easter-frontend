@@ -76,7 +76,7 @@ const GameOverModal = ({ isOpen, onClose, score, onPlayAgain, gameStats }) => {
               <p className="text-gray-500 text-xs">{t('gameOver.normal')}</p>
             </div>
             <div className="bg-yellow-50 dark:bg-yellow-900/30 rounded-lg p-2">
-              <p className="text-xl">✨</p>
+              <p className="text-xl">🌟</p>
               <p className="font-bold">{gameStats.goldenEggs}</p>
               <p className="text-gray-500 text-xs">{t('gameOver.golden')}</p>
             </div>

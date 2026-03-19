@@ -5,6 +5,9 @@ import { useSound } from './useSound';
 
 const REFILL_COUNT = 5;
 const BOUNDS = { minX: 5, maxX: 92, minY: 5, maxY: 88 };
+const getMaxEggs = () => (typeof window !== 'undefined' && window.innerWidth < 640)
+  ? config.MAX_EGGS_MOBILE
+  : config.MAX_EGGS_DESKTOP;
 const SPEED_BY_LEVEL = [0.26, 0.38, 0.52, 0.68, 0.86, 1.08];
 const BASE_SPEED = 0.26;
 const COMBO_WINDOW = 1200; // ms between clicks to keep combo alive
@@ -22,12 +25,13 @@ const PATTERNS = ['random', 'fromEdge', 'dropTop', 'burst', 'zigzag'];
 
 const makeEggWithPattern = (level = 1, pattern = 'random') => {
   const rand = Math.random();
-  const { bomb, golden, rainbow, freeze } = config.SPAWN_RATES;
+  const { bomb, golden, rainbow, freeze, timer } = config.SPAWN_RATES;
   let type = 'normal';
-  if      (rand < bomb)                             type = 'bomb';
-  else if (rand < bomb + golden)                    type = 'golden';
-  else if (rand < bomb + golden + rainbow)          type = 'rainbow';
-  else if (rand < bomb + golden + rainbow + freeze) type = 'freeze';
+  if      (rand < bomb)                                    type = 'bomb';
+  else if (rand < bomb + golden)                           type = 'golden';
+  else if (rand < bomb + golden + rainbow)                 type = 'rainbow';
+  else if (rand < bomb + golden + rainbow + freeze)        type = 'freeze';
+  else if (rand < bomb + golden + rainbow + freeze + timer) type = 'timer';
 
   const speed = SPEED_BY_LEVEL[Math.min(level - 1, SPEED_BY_LEVEL.length - 1)] || BASE_SPEED;
 
@@ -100,6 +104,7 @@ const useGameLogic = () => {
   const [frozen, setFrozen]       = useState(false);
   const [flashType, setFlashType] = useState(null); // 'good' | 'bad'
   const [scorePops, setScorePops] = useState([]); // [{id, x, y, value}]
+  const [countdown, setCountdown] = useState(null); // 3 | 2 | 1 | null
 
   const scoreRef     = useRef(0);
   const levelRef     = useRef(1);
@@ -146,8 +151,8 @@ const useGameLogic = () => {
 
   // ── rAF movement loop ──────────────────────────────────────────────────────
   const startMovementLoop = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
     const tick = () => {
-      if (!isPlayingRef.current) return;
       if (!frozenRef.current) {
         setEggs((prev) => {
           if (prev.length === 0) return prev;
@@ -173,11 +178,19 @@ const useGameLogic = () => {
 
   // ── Spawn helpers ──────────────────────────────────────────────────────────
   const spawnOne = useCallback(() => {
-    setEggs((prev) => [...prev, makeEgg(levelRef.current)]);
+    setEggs((prev) => {
+      if (prev.length >= getMaxEggs()) return prev;
+      return [...prev, makeEgg(levelRef.current)];
+    });
   }, []);
 
   const spawnBatch = useCallback((count = REFILL_COUNT) => {
-    setEggs((prev) => [...prev, ...makeBatch(count, levelRef.current)]);
+    setEggs((prev) => {
+      const max = getMaxEggs();
+      const canAdd = Math.max(0, max - prev.length);
+      if (canAdd === 0) return prev;
+      return [...prev, ...makeBatch(Math.min(count, canAdd), levelRef.current)];
+    });
   }, []);
 
   const startSpawnLoop = useCallback((rate) => {
@@ -231,6 +244,11 @@ const useGameLogic = () => {
       playSound('collect');
       setFrozen(true);
       setTimeout(() => setFrozen(false), 2200);
+    } else if (type === 'timer') {
+      playSound('golden');
+      triggerFlash('good');
+      setTimeLeft((t) => Math.min(t + 5, config.GAME_DURATION + 15)); // +5s, cap at base+15
+      addScorePop(eggX, eggY, '+5s');
     } else if (type === 'bomb') {
       playSound('bomb');
       triggerFlash('bad');
@@ -240,7 +258,7 @@ const useGameLogic = () => {
       setGameStats((s) => ({ ...s, normalEggs: s.normalEggs + 1 }));
     }
 
-    if (type !== 'freeze') {
+    if (type !== 'freeze' && type !== 'timer') {
       addScorePop(eggX, eggY, points);
       setScore((prev) => {
         const next = Math.max(0, prev + points);
@@ -256,12 +274,22 @@ const useGameLogic = () => {
     stopMovementLoop();
     setScore(0); setLevel(1); setTimeLeft(config.GAME_DURATION);
     setGameStats({ normalEggs: 0, goldenEggs: 0, bombs: 0, rainbows: 0 });
-    setGameOver(false); setIsPlaying(true); setCombo(0); setFrozen(false);
-    setScorePops([]);
+    setGameOver(false); setIsPlaying(false); setCombo(0); setFrozen(false);
+    setScorePops([]); setEggs([]);
     playSound('start');
-    setEggs(makeBatch(REFILL_COUNT + 2, 1));
-    startMovementLoop();
-    startSpawnLoop(config.DIFFICULTY_LEVELS[0].spawnRate);
+
+    // Countdown 3 → 2 → 1 → GO
+    setCountdown(3);
+    setTimeout(() => setCountdown(2), 1000);
+    setTimeout(() => setCountdown(1), 2000);
+    setTimeout(() => {
+      setCountdown(null);
+      setIsPlaying(true);
+      const initialCount = Math.min(REFILL_COUNT + 2, getMaxEggs());
+      setEggs(makeBatch(initialCount, 1));
+      startMovementLoop();
+      startSpawnLoop(config.DIFFICULTY_LEVELS[0].spawnRate);
+    }, 3000);
   }, [playSound, startMovementLoop, stopMovementLoop, startSpawnLoop]);
 
   const resetGame = useCallback(() => {
@@ -270,7 +298,7 @@ const useGameLogic = () => {
     setIsPlaying(false); setGameOver(false); setScore(0); setLevel(1);
     setTimeLeft(config.GAME_DURATION); setEggs([]);
     setGameStats({ normalEggs: 0, goldenEggs: 0, bombs: 0, rainbows: 0 });
-    setCombo(0); setFrozen(false); setScorePops([]);
+    setCombo(0); setFrozen(false); setScorePops([]); setCountdown(null);
   }, [stopMovementLoop]);
 
   // ── Timer ──────────────────────────────────────────────────────────────────
@@ -326,7 +354,7 @@ const useGameLogic = () => {
 
   return {
     score, level, timeLeft, eggs, isPlaying, gameOver, gameStats,
-    combo, frozen, flashType, scorePops,
+    combo, frozen, flashType, scorePops, countdown,
     startGame, handleEggClick, resetGame,
   };
 };

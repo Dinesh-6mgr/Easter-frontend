@@ -14,7 +14,7 @@ const Game = () => {
   const [showGameOver, setShowGameOver] = useState(false);
   const {
     score, level, timeLeft, eggs, isPlaying, gameOver, gameStats,
-    combo, frozen, flashType, scorePops,
+    combo, frozen, flashType, scorePops, countdown,
     startGame, handleEggClick, resetGame,
   } = useGameLogic();
   const { t } = useLanguage();
@@ -105,15 +105,16 @@ const Game = () => {
             flashType={flashType}
             scorePops={scorePops}
             combo={combo}
+            countdown={countdown}
           />
 
           {/* Controls */}
           <div className="flex justify-center gap-4 mt-4 sm:mt-6">
-            {!isPlaying ? (
+            {!isPlaying && countdown === null ? (
               <Button size="lg" onClick={startGame}>{t('game.startGame')}</Button>
-            ) : (
+            ) : isPlaying ? (
               <Button variant="outline" size="lg" onClick={resetGame}>{t('game.reset')}</Button>
-            )}
+            ) : null}
           </div>
 
           {/* Meaning */}
@@ -126,13 +127,13 @@ const Game = () => {
           </motion.div>
 
           {/* Legend */}
-          <div className="mt-4 sm:mt-6 grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 text-center">
+          <div className="mt-4 sm:mt-6 grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3 text-center">
             <div className="p-2 sm:p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
               <span className="text-xl sm:text-2xl block mb-1">🥚</span>
               <p className="font-semibold text-[10px] sm:text-xs">{t('game.normalEgg')}</p>
             </div>
             <div className="p-2 sm:p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl">
-              <span className="text-xl sm:text-2xl block mb-1">🥚✨</span>
+              <span className="text-xl sm:text-2xl block mb-1">🌟</span>
               <p className="font-semibold text-[10px] sm:text-xs">{t('game.goldenEgg')}</p>
             </div>
             <div className="p-2 sm:p-3 bg-red-100 dark:bg-red-900/30 rounded-xl">
@@ -146,6 +147,10 @@ const Game = () => {
             <div className="p-2 sm:p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
               <span className="text-xl sm:text-2xl block mb-1">❄️</span>
               <p className="font-semibold text-[10px] sm:text-xs">{t('game.freeze')}</p>
+            </div>
+            <div className="p-2 sm:p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
+              <span className="text-xl sm:text-2xl block mb-1">⏰</span>
+              <p className="font-semibold text-[10px] sm:text-xs">+5s Timer</p>
             </div>
           </div>
         </div>

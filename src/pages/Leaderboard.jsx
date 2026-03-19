@@ -13,16 +13,20 @@ const Leaderboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [slowLoad, setSlowLoad] = useState(false);
   const { t } = useLanguage();
 
   const fetchLeaderboard = useCallback(async () => {
     try {
-      setLoading(true); setError(null);
+      setLoading(true); setError(null); setSlowLoad(false);
+      // Show "waking up" message after 3s (Render cold start)
+      const slowTimer = setTimeout(() => setSlowLoad(true), 3000);
       const response = await leaderboardService.getTopScores();
+      clearTimeout(slowTimer);
       setScores(response.data);
       setLastUpdated(new Date());
     } catch { setError(t('common.error')); }
-    finally { setLoading(false); }
+    finally { setLoading(false); setSlowLoad(false); }
   }, [t]);
 
   useEffect(() => {
@@ -31,7 +35,19 @@ const Leaderboard = () => {
     return () => clearInterval(interval);
   }, [fetchLeaderboard]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center"><LoadingSpinner size="lg" /></div>;
+  if (loading) return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-3">
+      <LoadingSpinner size="lg" />
+      {slowLoad && (
+        <motion.p
+          initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+          className="text-sm text-gray-400 dark:text-gray-500 animate-pulse"
+        >
+          ☕ Server waking up... this may take a few seconds.
+        </motion.p>
+      )}
+    </div>
+  );
   if (error)   return <div className="min-h-screen flex items-center justify-center px-4"><ErrorMessage message={error} onRetry={fetchLeaderboard} /></div>;
 
   return (

@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion';
 
 const STYLES = {
-  golden:  { emoji: '🥚', label: 'Golden Egg', mobileSize: '1.2rem', size: '2.2rem'  },
-  bomb:    { emoji: '💣', label: 'Bomb',        mobileSize: '1.1rem', size: '2rem'   },
   normal:  { emoji: '🥚', label: 'Egg',         mobileSize: '1.0rem', size: '1.8rem' },
-  rainbow: { emoji: '🌈', label: 'Rainbow Egg', mobileSize: '1.3rem', size: '2.4rem' },
-  freeze:  { emoji: '❄️', label: 'Freeze',      mobileSize: '1.2rem', size: '2.2rem' },
+  golden:  { emoji: '🌟', label: 'Golden Egg',  mobileSize: '1.2rem', size: '2.2rem' },
+  bomb:    { emoji: '💣', label: 'Bomb',         mobileSize: '1.1rem', size: '2rem'   },
+  rainbow: { emoji: '🌈', label: 'Rainbow Egg', mobileSize: '1.0rem', size: '1.8rem' },
+  freeze:  { emoji: '❄️', label: 'Freeze',       mobileSize: '1.2rem', size: '2.2rem' },
+  timer:   { emoji: '⏰', label: '+5s Timer',    mobileSize: '1.2rem', size: '2.2rem' },
 };
 
 const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 640;
@@ -101,6 +102,19 @@ const Egg = ({ egg, onClick }) => {
           style={{
             position: 'absolute', inset: '-6px', borderRadius: '50%',
             background: 'radial-gradient(circle, #EF444466 0%, transparent 70%)',
+            pointerEvents: 'none', zIndex: -1,
+          }}
+        />
+      )}
+
+      {/* Timer glow */}
+      {egg.type === 'timer' && (
+        <motion.span
+          animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.5, 1] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+          style={{
+            position: 'absolute', inset: '-8px', borderRadius: '50%',
+            background: 'radial-gradient(circle, #34d399aa 0%, transparent 70%)',
             pointerEvents: 'none', zIndex: -1,
           }}
         />

@@ -40,14 +40,20 @@ const Timeline = () => {
 
             {/* Card */}
             <div className={`w-full sm:w-5/12 ${index % 2 === 0 ? 'sm:pr-10' : 'sm:pl-10'}`}>
-              <motion.div whileHover={{ scale: 1.02 }} className="card">
+              <motion.div
+                whileHover={{ scale: 1.02, y: -4 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="card shadow-md hover:shadow-xl border border-gray-100 dark:border-gray-700/60 transition-shadow duration-300"
+              >
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-2xl sm:text-3xl">{eventIcons[index]}</span>
-                  <h3 className="text-lg sm:text-xl font-bold">{event.day}</h3>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold leading-tight">{event.day}</h3>
+                    <p className="text-xs text-gray-400">{event.date}</p>
+                  </div>
                 </div>
-                <p className="text-xs text-gray-400 mb-2">{event.date}</p>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{event.description}</p>
-                <p className="text-xs italic text-easter-purple dark:text-easter-pink mb-3">{event.verse}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 leading-relaxed">{event.description}</p>
+                <p className="text-xs italic text-easter-purple dark:text-easter-pink mb-3 border-l-2 border-easter-purple/30 pl-3">{event.verse}</p>
                 <VerseCard category={eventVerseCategory[index]} className="mt-2" />
               </motion.div>
             </div>

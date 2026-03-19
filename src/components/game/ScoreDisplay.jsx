@@ -13,7 +13,7 @@ const ScoreDisplay = ({ score, level, stats }) => (
         {score}
       </motion.p>
       <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5">
-        🥚 {stats.normalEggs} &nbsp;✨ {stats.goldenEggs} &nbsp;💣 {stats.bombs}
+        🥚 {stats.normalEggs} &nbsp;🌟 {stats.goldenEggs} &nbsp;💣 {stats.bombs}
       </p>
     </div>
     <div className="text-right">

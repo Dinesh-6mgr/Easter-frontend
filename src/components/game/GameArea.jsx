@@ -3,9 +3,10 @@ import Egg from './Egg';
 
 // Floating score pop that flies upward and fades
 const ScorePop = ({ pop }) => {
-  const isPositive = pop.value > 0;
-  const color = isPositive ? '#10b981' : '#ef4444';
-  const label = isPositive ? `+${pop.value}` : `${pop.value}`;
+  const isString = typeof pop.value === 'string';
+  const isPositive = isString || pop.value > 0;
+  const color = isString ? '#3b82f6' : isPositive ? '#10b981' : '#ef4444';
+  const label = isString ? pop.value : isPositive ? `+${pop.value}` : `${pop.value}`;
   return (
     <motion.div
       initial={{ opacity: 1, y: 0, scale: 1 }}
@@ -18,7 +19,7 @@ const ScorePop = ({ pop }) => {
         transform: 'translate(-50%, -50%)',
         color,
         fontWeight: 900,
-        fontSize: Math.abs(pop.value) >= 5 ? '1.5rem' : '1.1rem',
+        fontSize: isString ? '1.3rem' : Math.abs(pop.value) >= 5 ? '1.5rem' : '1.1rem',
         pointerEvents: 'none',
         zIndex: 20,
         textShadow: '0 1px 4px rgba(0,0,0,0.3)',
@@ -30,7 +31,7 @@ const ScorePop = ({ pop }) => {
   );
 };
 
-const GameArea = ({ eggs, onEggClick, isPlaying, frozen, flashType, scorePops = [], combo }) => (
+const GameArea = ({ eggs, onEggClick, isPlaying, frozen, flashType, scorePops = [], combo, countdown }) => (
   <div className="relative bg-gradient-to-b from-sky-300 via-sky-200 to-green-200 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900 rounded-3xl min-h-[260px] sm:min-h-[420px] md:min-h-[480px] overflow-hidden select-none shadow-2xl">
 
     {/* Screen flash overlay */}
@@ -111,7 +112,7 @@ const GameArea = ({ eggs, onEggClick, isPlaying, frozen, flashType, scorePops = 
     </AnimatePresence>
 
     {/* Overlay when not playing */}
-    {!isPlaying && (
+    {!isPlaying && countdown === null && (
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }}
         className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10 rounded-3xl"
@@ -128,6 +129,31 @@ const GameArea = ({ eggs, onEggClick, isPlaying, frozen, flashType, scorePops = 
         </div>
       </motion.div>
     )}
+
+    {/* Countdown overlay */}
+    <AnimatePresence>
+      {countdown !== null && (
+        <motion.div
+          key="countdown-overlay"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-30 rounded-3xl"
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={countdown}
+              initial={{ scale: 0.3, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 1.8, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+              className="text-white font-black text-8xl sm:text-9xl select-none"
+              style={{ textShadow: '0 0 40px rgba(139,92,246,0.8)' }}
+            >
+              {countdown}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+      )}
+    </AnimatePresence>
 
     {/* Score pops */}
     <AnimatePresence>
