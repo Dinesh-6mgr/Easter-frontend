@@ -12,6 +12,7 @@ import JourneyLetter from './pages/journey/JourneyLetter';
 import JourneyStory from './pages/journey/JourneyStory';
 import JourneyGame from './pages/journey/JourneyGame';
 import JourneyResult from './pages/journey/JourneyResult';
+import About from './pages/About';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="/journey/story" element={<JourneyStory />} />
               <Route path="/journey/game" element={<JourneyGame />} />
               <Route path="/journey/result" element={<JourneyResult />} />
+              <Route path="/about" element={<About />} />
             </Routes>
           </AnimatePresence>
         </main>

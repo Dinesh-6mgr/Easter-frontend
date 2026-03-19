@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GiEasterEgg } from 'react-icons/gi';
-import { FaGamepad, FaHome, FaHistory, FaTrophy, FaBars, FaTimes, FaBookOpen } from 'react-icons/fa';
+import { FaGamepad, FaHome, FaHistory, FaTrophy, FaBars, FaTimes, FaBookOpen, FaInfoCircle } from 'react-icons/fa';
 import ThemeToggle from './ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 import { useLanguage } from '../../context/LanguageContext';
@@ -19,6 +19,7 @@ const Navbar = () => {
     { path: '/game',        name: t('nav.game'),        icon: <FaGamepad /> },
     { path: '/leaderboard', name: t('nav.leaderboard'), icon: <FaTrophy /> },
     { path: '/journey/letter', name: 'Letter ✝️',           icon: <FaBookOpen /> },
+    { path: '/about',          name: 'About',               icon: <FaInfoCircle /> },
   ];
 
   useEffect(() => {
