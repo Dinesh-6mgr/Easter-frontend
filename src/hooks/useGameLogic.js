@@ -8,8 +8,8 @@ const BOUNDS = { minX: 5, maxX: 92, minY: 5, maxY: 88 };
 const getMaxEggs = () => (typeof window !== 'undefined' && window.innerWidth < 640)
   ? config.MAX_EGGS_MOBILE
   : config.MAX_EGGS_DESKTOP;
-const SPEED_BY_LEVEL = [0.26, 0.38, 0.52, 0.68, 0.86, 1.08];
-const BASE_SPEED = 0.26;
+const SPEED_BY_LEVEL = [0.14, 0.22, 0.32, 0.46, 0.62, 0.82];
+const BASE_SPEED = 0.14;
 const COMBO_WINDOW = 1200; // ms between clicks to keep combo alive
 
 const randBetween = (a, b) => a + Math.random() * (b - a);

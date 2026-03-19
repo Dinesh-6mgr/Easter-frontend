@@ -8,12 +8,12 @@ const config = {
   SPAWN_RATES: { bomb: 0.33, golden: 0.12, rainbow: 0.04, freeze: 0.03, timer: 0.04 },
   // normal fills the rest
   DIFFICULTY_LEVELS: [
-    { threshold: 0,  spawnRate: 850  },
-    { threshold: 10, spawnRate: 650  },
-    { threshold: 25, spawnRate: 480  },
-    { threshold: 45, spawnRate: 320  },
-    { threshold: 65, spawnRate: 200  },
-    { threshold: 90, spawnRate: 130  },
+    { threshold: 0,  spawnRate: 1400 },
+    { threshold: 10, spawnRate: 1000 },
+    { threshold: 25, spawnRate: 700  },
+    { threshold: 45, spawnRate: 480  },
+    { threshold: 65, spawnRate: 300  },
+    { threshold: 90, spawnRate: 180  },
   ]
 };
 
