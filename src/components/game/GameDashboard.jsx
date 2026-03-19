@@ -99,7 +99,7 @@ const GameDashboard = ({ score, level, combo, gameStats, isPlaying, timeLeft }) 
                   <thead>
                     <tr className="border-b border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400">
                       <th className="px-2 py-2 text-left">#</th>
-                      <th className="px-2 py-2 text-left">Name</th>
+                      <th className="px-2 py-2 text-left">Player</th>
                       <th className="px-2 py-2 text-right">Score</th>
                     </tr>
                   </thead>
@@ -108,11 +108,14 @@ const GameDashboard = ({ score, level, combo, gameStats, isPlaying, timeLeft }) 
                       <tr key={entry._id}
                         className={`border-b border-gray-100 dark:border-gray-700/50 last:border-0 ${i < 3 ? 'bg-yellow-50/50 dark:bg-yellow-900/10' : ''} ${entry.score === score && score > 0 ? 'ring-1 ring-inset ring-easter-purple/40' : ''}`}
                       >
-                        <td className="px-2 py-2">
+                        <td className="px-2 py-2 align-top">
                           {i < 3 ? <FaCrown className={`w-3 h-3 ${rankColor(i)}`} /> : <span className={`font-mono font-bold ${rankColor(i)}`}>{i + 1}</span>}
                         </td>
-                        <td className="px-2 py-2 font-medium truncate max-w-[80px]">{entry.name}</td>
-                        <td className={`px-2 py-2 text-right font-bold ${rankColor(i)}`}>{entry.score}</td>
+                        <td className="px-2 py-2">
+                          <p className="font-semibold text-gray-800 dark:text-white leading-tight">{entry.name}</p>
+                          <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-tight mt-0.5">{entry.church}</p>
+                        </td>
+                        <td className={`px-2 py-2 text-right font-bold align-top ${rankColor(i)}`}>{entry.score}</td>
                       </tr>
                     ))}
                   </tbody>
