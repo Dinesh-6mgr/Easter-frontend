@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTrophy, FaCrown, FaChartBar, FaFire, FaBomb, FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import leaderboardService from '../../services/leaderboardService';
-import { useLanguage } from '../../context/LanguageContext';
 
 const rankColor = (i) => ['text-yellow-400', 'text-gray-400', 'text-amber-600'][i] ?? 'text-gray-500';
 
@@ -21,7 +20,6 @@ const GameDashboard = ({ score, level, combo, gameStats, isPlaying, timeLeft }) 
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState('board'); // 'stats' | 'board'
-  const { t } = useLanguage();
 
   useEffect(() => {
     leaderboardService.getTopScores()

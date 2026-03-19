@@ -55,4 +55,5 @@ class LeaderboardService {
   }
 }
 
-export default new LeaderboardService();
+const leaderboardService = new LeaderboardService();
+export default leaderboardService;

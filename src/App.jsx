@@ -8,7 +8,6 @@ import Timeline from './pages/Timeline';
 import Game from './pages/Game';
 import Leaderboard from './pages/Leaderboard';
 import LanguagePicker from './components/common/LanguagePicker';
-import JourneyForm from './pages/journey/JourneyForm';
 import JourneyLetter from './pages/journey/JourneyLetter';
 import JourneyStory from './pages/journey/JourneyStory';
 import JourneyGame from './pages/journey/JourneyGame';

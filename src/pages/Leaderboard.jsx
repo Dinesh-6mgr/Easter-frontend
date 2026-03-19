@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { FaTrophy, FaCrown } from 'react-icons/fa';
 import LeaderboardTable from '../components/leaderboard/LeaderboardTable';
@@ -15,7 +15,7 @@ const Leaderboard = () => {
   const [lastUpdated, setLastUpdated] = useState(null);
   const { t } = useLanguage();
 
-  const fetchLeaderboard = async () => {
+  const fetchLeaderboard = useCallback(async () => {
     try {
       setLoading(true); setError(null);
       const response = await leaderboardService.getTopScores();
@@ -23,13 +23,13 @@ const Leaderboard = () => {
       setLastUpdated(new Date());
     } catch { setError(t('common.error')); }
     finally { setLoading(false); }
-  };
+  }, [t]);
 
   useEffect(() => {
     fetchLeaderboard();
     const interval = setInterval(fetchLeaderboard, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchLeaderboard]);
 
   if (loading) return <div className="min-h-screen flex items-center justify-center"><LoadingSpinner size="lg" /></div>;
   if (error)   return <div className="min-h-screen flex items-center justify-center px-4"><ErrorMessage message={error} onRetry={fetchLeaderboard} /></div>;
