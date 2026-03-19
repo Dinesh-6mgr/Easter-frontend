@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
 import { FaGithub, FaEnvelope, FaHeart, FaGamepad, FaCross, FaTrophy, FaCheckCircle } from 'react-icons/fa';
 import { GiEasterEgg } from 'react-icons/gi';
 
@@ -17,7 +17,8 @@ const features = [
 ];
 
 const About = () => {
-  const [submitted, setSubmitted] = useState(false);
+  const [searchParams] = useSearchParams();
+  const submitted = searchParams.get('sent') === '1';
 
   return (
     <div className="min-h-screen py-8 sm:py-12 px-4">
@@ -94,8 +95,8 @@ const About = () => {
             D
           </div>
           <div>
-            <h2 className="text-lg sm:text-xl font-bold mb-1">Dinesh Rana</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">Full-Stack Developer · Built with <FaHeart className="inline w-3 h-3 text-red-400" /> and faith</p>
+            <h2 className="text-lg sm:text-xl font-bold mb-1">Dinesh Rana Magar</h2>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">MERN-Stack Developer · Built with <FaHeart className="inline w-3 h-3 text-red-400" /> and faith</p>
             <div className="flex gap-3">
               <a href="https://github.com/Dinesh-6mgr" target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-easter-purple dark:hover:text-easter-pink transition-colors">
@@ -129,13 +130,13 @@ const About = () => {
             <form
               action="https://formsubmit.co/dineshrana4352@gmail.com"
               method="POST"
-              onSubmit={() => setSubmitted(true)}
               className="space-y-4"
             >
               {/* FormSubmit config */}
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_subject" value="Easter Journey — Contact Form" />
               <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value={`${window.location.origin}/about?sent=1`} />
               <input type="text" name="_honey" style={{ display: 'none' }} />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
