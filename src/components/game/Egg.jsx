@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 
 const STYLES = {
-  golden:  { emoji: '🥚', label: 'Golden Egg', mobileSize: '1.4rem', size: '2.2rem'  },
-  bomb:    { emoji: '💣', label: 'Bomb',        mobileSize: '1.3rem', size: '2rem'   },
-  normal:  { emoji: '🥚', label: 'Egg',         mobileSize: '1.2rem', size: '1.8rem' },
-  rainbow: { emoji: '🌈', label: 'Rainbow Egg', mobileSize: '1.5rem', size: '2.4rem' },
-  freeze:  { emoji: '❄️', label: 'Freeze',      mobileSize: '1.4rem', size: '2.2rem' },
+  golden:  { emoji: '🥚', label: 'Golden Egg', mobileSize: '1.2rem', size: '2.2rem'  },
+  bomb:    { emoji: '💣', label: 'Bomb',        mobileSize: '1.1rem', size: '2rem'   },
+  normal:  { emoji: '🥚', label: 'Egg',         mobileSize: '1.0rem', size: '1.8rem' },
+  rainbow: { emoji: '🌈', label: 'Rainbow Egg', mobileSize: '1.3rem', size: '2.4rem' },
+  freeze:  { emoji: '❄️', label: 'Freeze',      mobileSize: '1.2rem', size: '2.2rem' },
 };
 
 const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 640;

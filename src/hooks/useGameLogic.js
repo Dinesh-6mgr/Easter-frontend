@@ -5,34 +5,85 @@ import { useSound } from './useSound';
 
 const REFILL_COUNT = 5;
 const BOUNDS = { minX: 5, maxX: 92, minY: 5, maxY: 88 };
-const SPEED_BY_LEVEL = [0.18, 0.27, 0.38, 0.52, 0.68, 0.86];
-const BASE_SPEED = 0.18;
+const SPEED_BY_LEVEL = [0.26, 0.38, 0.52, 0.68, 0.86, 1.08];
+const BASE_SPEED = 0.26;
 const COMBO_WINDOW = 1200; // ms between clicks to keep combo alive
 
 const randBetween = (a, b) => a + Math.random() * (b - a);
 
-const makeEgg = (level = 1) => {
+// ── Spawn patterns ────────────────────────────────────────────────────────────
+// 1. random: anywhere in bounds (original)
+// 2. fromEdge: spawns on a random edge, moves inward
+// 3. dropTop: spawns at top, falls downward
+// 4. burst: spawns near center, flies outward
+// 5. zigzag: spawns on left/right edge with steep angle
+
+const PATTERNS = ['random', 'fromEdge', 'dropTop', 'burst', 'zigzag'];
+
+const makeEggWithPattern = (level = 1, pattern = 'random') => {
   const rand = Math.random();
   const { bomb, golden, rainbow, freeze } = config.SPAWN_RATES;
   let type = 'normal';
-  if      (rand < bomb)                          type = 'bomb';
-  else if (rand < bomb + golden)                 type = 'golden';
-  else if (rand < bomb + golden + rainbow)       type = 'rainbow';
+  if      (rand < bomb)                             type = 'bomb';
+  else if (rand < bomb + golden)                    type = 'golden';
+  else if (rand < bomb + golden + rainbow)          type = 'rainbow';
   else if (rand < bomb + golden + rainbow + freeze) type = 'freeze';
 
   const speed = SPEED_BY_LEVEL[Math.min(level - 1, SPEED_BY_LEVEL.length - 1)] || BASE_SPEED;
-  const angle = Math.random() * Math.PI * 2;
+
+  let x, y, vx, vy;
+
+  switch (pattern) {
+    case 'fromEdge': {
+      const edge = Math.floor(Math.random() * 4); // 0=top,1=right,2=bottom,3=left
+      if (edge === 0)      { x = randBetween(10, 90); y = BOUNDS.minY; vx = randBetween(-speed, speed); vy = speed; }
+      else if (edge === 1) { x = BOUNDS.maxX; y = randBetween(10, 85); vx = -speed; vy = randBetween(-speed, speed); }
+      else if (edge === 2) { x = randBetween(10, 90); y = BOUNDS.maxY; vx = randBetween(-speed, speed); vy = -speed; }
+      else                 { x = BOUNDS.minX; y = randBetween(10, 85); vx = speed; vy = randBetween(-speed, speed); }
+      break;
+    }
+    case 'dropTop': {
+      x = randBetween(BOUNDS.minX, BOUNDS.maxX);
+      y = BOUNDS.minY;
+      vx = randBetween(-speed * 0.4, speed * 0.4);
+      vy = speed * 1.2;
+      break;
+    }
+    case 'burst': {
+      x = randBetween(35, 65);
+      y = randBetween(35, 65);
+      const angle = Math.random() * Math.PI * 2;
+      vx = Math.cos(angle) * speed * 1.3;
+      vy = Math.sin(angle) * speed * 1.3;
+      break;
+    }
+    case 'zigzag': {
+      const fromLeft = Math.random() < 0.5;
+      x = fromLeft ? BOUNDS.minX : BOUNDS.maxX;
+      y = randBetween(BOUNDS.minY, BOUNDS.maxY);
+      vx = fromLeft ? speed : -speed;
+      vy = (Math.random() < 0.5 ? 1 : -1) * speed * 0.8;
+      break;
+    }
+    default: {
+      const angle = Math.random() * Math.PI * 2;
+      x = randBetween(BOUNDS.minX, BOUNDS.maxX);
+      y = randBetween(BOUNDS.minY, BOUNDS.maxY);
+      vx = Math.cos(angle) * speed;
+      vy = Math.sin(angle) * speed;
+    }
+  }
 
   return {
     id: Date.now() + Math.random(),
-    type,
-    level,
-    x: randBetween(BOUNDS.minX, BOUNDS.maxX),
-    y: randBetween(BOUNDS.minY, BOUNDS.maxY),
-    vx: Math.cos(angle) * speed,
-    vy: Math.sin(angle) * speed,
+    type, level, x, y, vx, vy,
     createdAt: Date.now(),
   };
+};
+
+const makeEgg = (level = 1) => {
+  const pattern = PATTERNS[Math.floor(Math.random() * PATTERNS.length)];
+  return makeEggWithPattern(level, pattern);
 };
 
 const makeBatch = (count, level) => Array.from({ length: count }, () => makeEgg(level));
