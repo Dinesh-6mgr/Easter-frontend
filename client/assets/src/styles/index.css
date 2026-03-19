@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply transition-colors duration-300;
+  }
+  
+  /* Dark mode styles */
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-easter-purple to-easter-pink 
+           text-white font-semibold rounded-lg shadow-lg 
+           hover:shadow-xl transform hover:-translate-y-0.5 
+           transition-all duration-300 focus:outline-none 
+           focus:ring-2 focus:ring-easter-purple focus:ring-opacity-50;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-gray-200 dark:bg-gray-700 
+           text-gray-800 dark:text-white font-semibold rounded-lg 
+           hover:bg-gray-300 dark:hover:bg-gray-600 
+           transition-all duration-300 focus:outline-none;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg 
+           p-6 transition-all duration-300 hover:shadow-xl;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-easter-purple to-easter-pink 
+           bg-clip-text text-transparent;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-easter-purple bg-opacity-50 rounded-full 
+         hover:bg-opacity-75 transition-colors;
+}
+
+/* Game specific styles */
+.egg-hover {
+  @apply transform hover:scale-110 transition-transform duration-200 
+         cursor-pointer;
+}
+
+.timeline-line {
+  @apply absolute left-1/2 transform -translate-x-1/2 w-1 
+         bg-gradient-to-b from-easter-purple to-easter-pink;
+}

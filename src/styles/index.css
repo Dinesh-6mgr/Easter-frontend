@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-easter-purple to-easter-pink text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-easter-purple focus:ring-opacity-50;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 transition-all duration-300 hover:shadow-xl;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-3 sm:px-6 lg:px-8;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-easter-purple to-easter-pink bg-clip-text text-transparent;
+  }
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #8B5CF6; border-radius: 4px; }
+
+/* Egg movement animations */
+@keyframes eggBob {
+  from { transform: translate(-50%, -50%) rotate(-6deg) scale(1); }
+  to   { transform: translate(-50%, -50%) rotate(6deg)  scale(1.05); }
+}
+
+@keyframes eggPulse {
+  from { transform: translate(-50%, -50%) scale(1)    rotate(-4deg); }
+  to   { transform: translate(-50%, -50%) scale(1.12) rotate(4deg); }
+}
+
+@keyframes eggShake {
+  from { transform: translate(-50%, -50%) rotate(-10deg) scale(0.95); }
+  to   { transform: translate(-50%, -50%) rotate(10deg)  scale(1.05); }
+}
