@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaGamepad, FaTrophy, FaHistory, FaCrown, FaChevronDown } from 'react-icons/fa';
 import { GiEasterEgg } from 'react-icons/gi';
