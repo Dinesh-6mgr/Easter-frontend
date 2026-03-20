@@ -1,5 +1,6 @@
 import api from './api';
 import toast from 'react-hot-toast';
+import { getUserId } from '../utils/userId';
 
 class LeaderboardService {
   async getTopScores() {
@@ -14,7 +15,7 @@ class LeaderboardService {
 
   async submitScore(scoreData) {
     try {
-      const response = await api.post('/scores', scoreData);
+      const response = await api.post('/scores', { ...scoreData, userId: getUserId() });
       toast.success('Score submitted successfully! 🎉');
       return response.data;
     } catch (error) {

@@ -5,6 +5,7 @@ import ScoreDisplay from '../components/game/ScoreDisplay';
 import TimerBar from '../components/game/TimerBar';
 import GameOverModal from '../components/game/GameOverModal';
 import GameDashboard from '../components/game/GameDashboard';
+import PlayerSetupModal, { getPlayer } from '../components/game/PlayerSetupModal';
 import useGameLogic from '../hooks/useGameLogic';
 import Button from '../components/common/Button';
 import config from '../config';
@@ -12,6 +13,8 @@ import { useLanguage } from '../context/LanguageContext';
 
 const Game = () => {
   const [showGameOver, setShowGameOver] = useState(false);
+  const [showSetup, setShowSetup] = useState(false);
+  const [player, setPlayer] = useState(getPlayer);
   const {
     score, level, timeLeft, eggs, isPlaying, gameOver, gameStats,
     combo, frozen, flashType, scorePops, countdown,
@@ -22,6 +25,17 @@ const Game = () => {
   useEffect(() => {
     if (gameOver) setShowGameOver(true);
   }, [gameOver]);
+
+  const handleStart = () => {
+    if (!player) { setShowSetup(true); return; }
+    startGame();
+  };
+
+  const handleSetupDone = (p) => {
+    setPlayer(p);
+    setShowSetup(false);
+    startGame();
+  };
 
   const handlePlayAgain = () => {
     setShowGameOver(false);
@@ -111,7 +125,7 @@ const Game = () => {
           {/* Controls */}
           <div className="flex justify-center gap-4 mt-4 sm:mt-6">
             {!isPlaying && countdown === null ? (
-              <Button size="lg" onClick={startGame}>{t('game.startGame')}</Button>
+              <Button size="lg" onClick={handleStart}>{t('game.startGame')}</Button>
             ) : isPlaying ? (
               <Button variant="outline" size="lg" onClick={resetGame}>{t('game.reset')}</Button>
             ) : null}
@@ -174,6 +188,12 @@ const Game = () => {
         score={score}
         onPlayAgain={handlePlayAgain}
         gameStats={gameStats}
+        player={player}
+      />
+
+      <PlayerSetupModal
+        isOpen={showSetup}
+        onDone={handleSetupDone}
       />
     </div>
   );

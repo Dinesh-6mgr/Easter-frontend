@@ -158,6 +158,8 @@ const ChurchCombobox = ({ value, onChange, churches, onNewChurch }) => {
   );
 };
 
+import { getPlayer } from './PlayerSetupModal';
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Main modal
 // ─────────────────────────────────────────────────────────────────────────────
@@ -168,7 +170,13 @@ const ScoreSubmissionModal = ({ isOpen, onClose, score, rank }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useLanguage();
 
-  useEffect(() => { if (isOpen) { setName(''); setChurch(''); } }, [isOpen]);
+  useEffect(() => {
+    if (isOpen) {
+      const saved = getPlayer();
+      setName(saved?.name || '');
+      setChurch(saved?.church || '');
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) leaderboardService.getChurches().then(setChurches).catch(() => setChurches([]));

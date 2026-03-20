@@ -1,12 +1,20 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 
 const LanguagePicker = () => {
-  const { hasChosen, setLang } = useLanguage();
+  // Show on first visit only (no lang in localStorage before this session)
+  const [show, setShow] = useState(() => !localStorage.getItem('lang'));
+  const { setLang } = useLanguage();
+
+  const pick = (l) => {
+    setLang(l);
+    setShow(false);
+  };
 
   return (
     <AnimatePresence>
-      {!hasChosen && (
+      {show && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -32,7 +40,7 @@ const LanguagePicker = () => {
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                onClick={() => setLang('en')}
+                onClick={() => pick('en')}
                 className="w-full py-4 rounded-2xl bg-gradient-to-r from-easter-purple to-easter-pink text-white font-bold text-lg shadow-lg hover:shadow-xl transition-shadow"
               >
                 🇬🇧 English
@@ -41,7 +49,7 @@ const LanguagePicker = () => {
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                onClick={() => setLang('ne')}
+                onClick={() => pick('ne')}
                 className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-shadow"
               >
                 🇳🇵 नेपाली

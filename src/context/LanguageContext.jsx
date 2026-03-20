@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import translations from '../i18n/translations';
 
 const LanguageContext = createContext();
@@ -14,25 +14,26 @@ export const interpolate = (str, vars = {}) =>
   str.replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? vars[k] : `{${k}}`));
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState(() => localStorage.getItem('lang') || null);
+  const [lang, setLangState] = useState(() => localStorage.getItem('lang') || 'en');
 
-  useEffect(() => {
-    if (lang) localStorage.setItem('lang', lang);
-  }, [lang]);
+  const setLang = useCallback((newLang) => {
+    localStorage.setItem('lang', newLang);
+    setLangState(newLang);
+  }, []);
 
-  const t = (path, vars) => {
+  const t = useCallback((path, vars) => {
     const keys = path.split('.');
-    let val = translations[lang || 'en'];
+    let val = translations[lang] ?? translations['en'];
     for (const k of keys) {
       if (val == null) return path;
       val = val[k];
     }
     if (typeof val === 'string') return vars ? interpolate(val, vars) : val;
     return val ?? path;
-  };
+  }, [lang]);
 
   return (
-    <LanguageContext.Provider value={{ lang: lang || 'en', setLang, t, hasChosen: !!lang }}>
+    <LanguageContext.Provider value={{ lang, setLang, t, hasChosen: true }}>
       {children}
     </LanguageContext.Provider>
   );

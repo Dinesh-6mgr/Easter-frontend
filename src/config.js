@@ -1,6 +1,6 @@
 const config = {
   API_URL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
-  MIN_SCORE_TO_SUBMIT: 30,
+  MIN_SCORE_TO_SUBMIT: 20,
   GAME_DURATION: 30,
   MAX_EGGS_MOBILE: 5,
   MAX_EGGS_DESKTOP: 8,
