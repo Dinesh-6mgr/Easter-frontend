@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp, FaFacebook, FaTelegramPlane, FaTwitter, FaLink, FaTimes } from 'react-icons/fa';
 import { useLanguage } from '../../context/LanguageContext';
 import { getPlayer } from '../../components/game/PlayerSetupModal';
-import { getCurrentEasterMessage } from '../../utils/dateMessages';
 
 const LS_KEY = 'easterJourneyNames';
 

@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCrown, FaTrophy } from 'react-icons/fa';
+import { FaTrophy } from 'react-icons/fa';
 import Modal from '../common/Modal';
 import Button from '../common/Button';
 import VerseCard from '../common/VerseCard';
 import leaderboardService from '../../services/leaderboardService';
 import { useLanguage } from '../../context/LanguageContext';
 import confetti from 'canvas-confetti';
-
-const rankColor = (i) => ['text-yellow-400', 'text-gray-400', 'text-amber-600'][i] ?? 'text-gray-500';
 
 const rankEmoji = (rank) => {
   if (rank === 1) return '🥇';
