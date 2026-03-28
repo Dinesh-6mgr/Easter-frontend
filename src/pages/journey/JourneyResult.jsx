@@ -84,9 +84,9 @@ const platforms = [
     build: (u, from, rt) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(rt.shareMsgShort(from))}&url=${encodeURIComponent(u)}` },
 ];
 
-const ShareModal = ({ onClose, rt }) => {
-  const [sFrom, setSFrom] = useState('');
-  const [sTo,   setSTo]   = useState('');
+const ShareModal = ({ onClose, rt, defaultFrom = '', defaultTo = '' }) => {
+  const [sFrom, setSFrom] = useState(defaultFrom);
+  const [sTo,   setSTo]   = useState(defaultTo);
   const [copied, setCopied] = useState(false);
   const isValid = sFrom.trim() && sTo.trim();
 
@@ -183,6 +183,12 @@ const JourneyResult = () => {
   const { text, reference } = parseVerse(verse);
   const fired = useRef(false);
   const [showShare, setShowShare] = useState(false);
+  const [showNudge, setShowNudge] = useState(false);
+
+  // Read from/to from URL so share form can be pre-filled
+  const searchParams = new URLSearchParams(window.location.search);
+  const urlFrom = searchParams.get('from') || '';
+  const urlTo   = searchParams.get('to')   || '';
 
   useEffect(() => {
     if (fired.current) return;
@@ -193,6 +199,12 @@ const JourneyResult = () => {
     setTimeout(() => shoot({ particleCount: 80, origin: { x: 0.15, y: 0.6 } }), 350);
     setTimeout(() => shoot({ particleCount: 80, origin: { x: 0.85, y: 0.6 } }), 650);
     setTimeout(() => shoot({ particleCount: 60, origin: { y: 0.3 } }), 1000);
+  }, []);
+
+  // Show share nudge after 5 seconds
+  useEffect(() => {
+    const t = setTimeout(() => setShowNudge(true), 5000);
+    return () => clearTimeout(t);
   }, []);
 
   return (
@@ -290,7 +302,59 @@ const JourneyResult = () => {
       </motion.div>
 
       <AnimatePresence>
-        {showShare && <ShareModal onClose={() => setShowShare(false)} rt={rt} />}
+        {showShare && <ShareModal onClose={() => setShowShare(false)} rt={rt} defaultFrom={urlFrom} defaultTo={urlTo} />}
+      </AnimatePresence>
+
+      {/* 5-second share nudge */}
+      <AnimatePresence>
+        {showNudge && !showShare && (
+          <motion.div
+            initial={{ y: 120, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 120, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+            className="fixed bottom-0 left-0 right-0 z-40 px-4 pb-6"
+          >
+            <div className="w-full max-w-md mx-auto bg-white dark:bg-gray-900 rounded-3xl shadow-2xl border-2 border-orange-300 dark:border-orange-700 overflow-hidden">
+              <div className="h-1.5 w-full bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400" />
+              <div className="px-6 py-5">
+                <div className="flex items-center gap-3 mb-4">
+                  <motion.span
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="text-4xl shrink-0"
+                  >
+                    💌
+                  </motion.span>
+                  <div>
+                    <p className="text-lg font-extrabold text-gray-900 dark:text-white leading-tight">
+                      {lang === 'ne' ? 'यो यात्रा साथीसँग बाँड्नुहुन्छ?' : 'Want to share this journey?'}
+                    </p>
+                    <p className="text-sm text-orange-500 dark:text-orange-400 font-medium mt-0.5">
+                      {lang === 'ne' ? 'कसैलाई यो आशाको कथा पठाउनुहोस्' : 'Send someone this story of hope'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => { setShowNudge(false); setShowShare(true); }}
+                    className="flex-1 py-3.5 rounded-2xl bg-gradient-to-r from-orange-400 to-amber-400 text-white font-extrabold text-base shadow-lg shadow-orange-200 dark:shadow-orange-900/30"
+                  >
+                    💌 {lang === 'ne' ? 'Share गर्नुहोस्' : 'Yes, Share!'}
+                  </motion.button>
+                  <button
+                    onClick={() => setShowNudge(false)}
+                    className="px-5 py-3.5 rounded-2xl border-2 border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 font-semibold text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    {lang === 'ne' ? 'पछि' : 'Later'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </>
   );

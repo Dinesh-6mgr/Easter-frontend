@@ -11,81 +11,153 @@ const LS_KEY = 'easterJourneyNames';
 const DATE_GREETINGS = {
   en: {
     easterSunday: {
-      occasion: 'Easter Sunday 🌅', emoji: '🌅',
+      occasion: 'Easter Sunday 🌅',
+      emoji: '🌅',
       greeting: 'He is Risen! Alleluia!',
-      body: `Today is the greatest day in history — the tomb is empty, death is defeated, and hope is alive!\n\nJesus rose from the dead, just as He promised. This is not just a story from the past — it is a living hope for today and forever.\n\nMay this Easter Sunday fill your heart with joy, peace, and the unshakeable certainty that you are deeply loved.`,
-      closing: 'With resurrection joy',
+      body: `Today we rejoice in the victory of the resurrection — the tomb is empty, death is defeated, and hope is alive forever.
+
+Jesus rose from the dead, just as He promised. This is not only a story from long ago, but a living hope for today and for all eternity.
+
+May this Easter Sunday fill your heart with peace, joy, and renewed faith in the One who gives life.`,
+      closing: 'With Easter joy',
     },
+
     goodFriday: {
-      occasion: 'Good Friday ✝️', emoji: '✝️',
-      greeting: 'On this solemn and sacred day,',
-      body: `Today we remember the cross — the moment when love went to its greatest length.\n\nJesus, the Son of God, gave His life so that we could have life. It is finished, He said — and in those words, every debt was paid, every sin forgiven.\n\nThis is not a day of sadness alone, but of profound gratitude. Because of the cross, Sunday is coming.`,
-      closing: 'With a grateful heart',
+      occasion: 'Good Friday ✝️',
+      emoji: '✝️',
+      greeting: 'On this sacred day, we remember,',
+      body: `Today we reflect on the cross — where the love of Christ was revealed in its fullest measure.
+
+Jesus, the Son of God, gave Himself for the life of the world. When He said, "It is finished," the work of redemption was completed and the way of grace was opened.
+
+This day calls us not only to sorrow, but also to gratitude, reverence, and quiet hope.`,
+      closing: 'With sincere gratitude',
     },
+
     palmSunday: {
-      occasion: 'Palm Sunday 🌿', emoji: '🌿',
-      greeting: 'Hosanna! Blessed is He who comes!',
-      body: `Today we wave our palms and welcome the King of Kings into Jerusalem — and into our hearts.\n\nThe crowd shouted Hosanna, not knowing what the week ahead would hold. But Jesus knew. He came anyway — for you, for me, for all of us.\n\nThis Holy Week, walk with us through the greatest story ever told.`,
+      occasion: 'Palm Sunday 🌿',
+      emoji: '🌿',
+      greeting: 'Hosanna! Blessed is He who comes in the name of the Lord!',
+      body: `Today we remember Jesus entering Jerusalem in humility and peace.
+
+The crowds welcomed Him with joy, not fully understanding all that this week would hold. Yet Jesus came willingly, knowing the path before Him.
+
+As Holy Week begins, may our hearts also welcome the King with faith, praise, and expectation.`,
       closing: 'With hope and praise',
     },
+
     maundyThursday: {
-      occasion: 'Maundy Thursday 🍞', emoji: '🍞',
-      greeting: 'A new commandment I give to you:',
-      body: `On this night, Jesus gathered with His disciples for the Last Supper. He broke bread, poured wine, and washed their feet — the King becoming a servant.\n\n"Love one another as I have loved you." These words echo through the centuries, calling us to a love that is humble, sacrificial, and real.\n\nTonight, remember what love truly looks like.`,
+      occasion: 'Maundy Thursday 🍞',
+      emoji: '🍞',
+      greeting: 'On this meaningful evening, we remember,',
+      body: `On this night, Jesus gathered with His disciples at the Last Supper. He broke the bread, shared the cup, and washed their feet.
+
+In doing so, He showed that true greatness is found in humility, service, and love. His words still call us to love one another as He has loved us.
+
+May this day lead us to deeper love, faithful service, and grateful remembrance.`,
       closing: 'With humble love',
     },
+
     holySaturday: {
-      occasion: 'Holy Saturday 🕯️', emoji: '🕯️',
-      greeting: 'In the silence, we wait.',
-      body: `Today the disciples sat in grief, not yet knowing what Sunday would bring. The tomb was sealed. Hope seemed buried.\n\nBut God was not finished. He never is.\n\nIn your own moments of silence and waiting, remember — Sunday is always coming. The darkest night gives way to the brightest dawn.`,
+      occasion: 'Holy Saturday 🕯️',
+      emoji: '🕯️',
+      greeting: 'In the silence, we wait with hope.',
+      body: `Today we remember the quietness of the tomb and the sorrow of those who waited without yet seeing what God would do next.
+
+Though everything seemed still, God was still at work. Even in silence, He had not abandoned His promise.
+
+For every season of waiting, Holy Saturday reminds us that hope is never lost in God’s hands.`,
       closing: 'With quiet hope',
     },
+
     default: {
-      occasion: 'Easter Season 🐣', emoji: '🥚',
-      greeting: 'Grace and peace to you this Easter season!',
-      body: `Easter is more than chocolate eggs and spring flowers — it is the story of a love so deep that it conquered death itself.\n\nFrom Palm Sunday to the empty tomb, every step of this journey was taken for you. You are the reason He came. You are the reason He stayed on that cross. You are the reason the stone was rolled away.\n\nWelcome to the Passion of the Week 2082. May it change your heart as it changed the world.`,
-      closing: 'With Easter blessings',
+      occasion: 'Easter Season 🐣',
+      emoji: '🥚',
+      greeting: 'Grace and peace to you in this Easter season.',
+      body: `Easter is more than a celebration — it is the message of Christ’s love, sacrifice, death, and resurrection.
+
+From Palm Sunday to the empty tomb, every step reveals the heart of God and the gift of salvation made known through Jesus Christ.
+
+Welcome to the Passion of the Week 2082. May this journey deepen your faith and fill your heart with peace and hope.`,
+      closing: 'Wishing you peace and joy',
     },
   },
+
   ne: {
     easterSunday: {
-      occasion: 'ईस्टर आइतबार 🌅', emoji: '🌅',
-      greeting: 'उहाँ जीवित हुनुभयो! हल्लेलूयाह!',
-      body: `आज इतिहासको सबैभन्दा महान दिन हो — चिहान खाली छ, मृत्यु पराजित भयो, र आशा जीवित छ!\n\nयेशू मृत्युबाट जीवित हुनुभयो, ठीक उहाँले वाचा गर्नुभएझैं। यो केवल विगतको कथा होइन — यो आज र सदाको लागि जीवित आशा हो।\n\nयो ईस्टर आइतबारले तपाईंको मनलाई आनन्द, शान्ति, र यो अटल विश्वासले भरोस् कि तपाईं गहिरो माया गरिनुहुन्छ।`,
-      closing: 'पुनरुत्थानको आनन्दसहित',
+      occasion: 'ईस्टर आइतबार 🌅',
+      emoji: '🌅',
+      greeting: 'उहाँ जीवित हुनुभएको छ! हल्लेलूयाह!',
+      body: `आज हामी पुनरुत्थानको विजयमा आनन्दित हुन्छौँ — चिहान खाली छ, मृत्यु पराजित भएको छ, र आशा सदाको लागि जीवित छ।
+
+येशू ठीक उहाँले वाचा गर्नुभएझैँ मृत्युमाथि विजय पाएर जीवित हुनुभयो। यो केवल विगतको घटना मात्र होइन, तर आज र सदासर्वदाको लागि जीवित आशा हो।
+
+यो ईस्टर आइतबारले तपाईंको हृदयलाई शान्ति, आनन्द, र जीवन दिनुहुने प्रभुप्रतिको नयाँ विश्वासले भरिदिओस्।`,
+      closing: 'ईस्टरको आनन्दसहित',
     },
+
     goodFriday: {
-      occasion: 'गुड फ्राइडे ✝️', emoji: '✝️',
-      greeting: 'यो गम्भीर र पवित्र दिनमा,',
-      body: `आज हामी क्रूसलाई सम्झन्छौं — त्यो क्षण जब माया आफ्नो सबैभन्दा ठूलो सीमासम्म पुग्यो।\n\nपरमेश्वरका पुत्र येशूले आफ्नो जीवन दिनुभयो ताकि हामी जीवन पाउँ। "सकियो," उहाँले भन्नुभयो — र ती शब्दहरूमा, हरेक ऋण चुकियो, हरेक पाप माफ भयो।\n\nयो केवल दुःखको दिन मात्र होइन, बरु गहिरो कृतज्ञताको दिन हो। क्रूसको कारण, आइतबार आउँदैछ।`,
-      closing: 'कृतज्ञ मनसहित',
+      occasion: 'गुड फ्राइडे ✝️',
+      emoji: '✝️',
+      greeting: 'यस पवित्र दिनमा हामी सम्झन्छौँ,',
+      body: `आज हामी क्रूसलाई मनन गर्छौँ — जहाँ ख्रीष्टको प्रेम पूर्ण रूपमा प्रकट भयो।
+
+परमेश्वरका पुत्र येशूले संसारको निम्ति आफूलाई अर्पण गर्नुभयो। जब उहाँले भन्नुभयो, "पूरा भयो," उद्धारको काम पूरा भयो र अनुग्रहको बाटो खुल्यो।
+
+यो दिनले हामीलाई केवल शोकमा होइन, तर कृतज्ञता, श्रद्धा, र मौन आशामा पनि डोर्‍याउँछ।`,
+      closing: 'हार्दिक कृतज्ञतासहित',
     },
+
     palmSunday: {
-      occasion: 'पाम आइतबार 🌿', emoji: '🌿',
-      greeting: 'होसन्ना! धन्य छन् उहाँ जो आउनुहुन्छ!',
-      body: `आज हामी ताडपत्र हल्लाउँछौं र राजाधिराजलाई यरूशलेममा — र आफ्नो मनमा स्वागत गर्छौं।\n\nभीडले होसन्ना भन्यो, अगाडि के हुन्छ थाहा नपाई। तर येशूलाई थाहा थियो। उहाँ आउनुभयो — तपाईंको लागि, मेरो लागि, हामी सबैको लागि।\n\nयो पवित्र सातामा, हामीसँग अहिलेसम्म भनिएको सबैभन्दा महान कथामा हिँड्नुहोस्।`,
+      occasion: 'पाम आइतबार 🌿',
+      emoji: '🌿',
+      greeting: 'होसन्ना! धन्य हुनुहुन्छ उहाँ, जो प्रभुको नाममा आउनुहुन्छ!',
+      body: `आज हामी येशूको यरूशलेम प्रवेशलाई सम्झन्छौँ — उहाँ नम्रता र शान्तिसहित राजा भएर आउनुभयो।
+
+भीडले उहाँलाई आनन्दसाथ स्वागत गर्‍यो, तर यस साताले के ल्याउनेछ भन्ने कुरा सबैले पूर्ण रूपमा बुझेका थिएनन्। तर येशूले बाटो जान्नुहुन्थ्यो, र तैपनि उहाँ इच्छापूर्वक आउनुभयो।
+
+पवित्र साताको सुरुवातमा, हाम्रो हृदयले पनि विश्वास, स्तुति, र आशासहित उहाँलाई स्वागत गरोस्।`,
       closing: 'आशा र स्तुतिसहित',
     },
+
     maundyThursday: {
-      occasion: 'मौन्डी बिहीबार 🍞', emoji: '🍞',
-      greeting: 'म तिमीहरूलाई नयाँ आज्ञा दिन्छु:',
-      body: `यस रातमा, येशू अन्तिम भोजको लागि आफ्ना चेलाहरूसँग भेला हुनुभयो। उहाँले रोटी तोड्नुभयो, दाखरस खन्याउनुभयो, र उनीहरूका खुट्टा धुनुभयो — राजा सेवक बन्नुभयो।\n\n"जसरी मैले तिमीहरूलाई माया गरेँ, त्यसरी नै एकअर्कालाई माया गर।" यी शब्दहरू शताब्दीहरूमा गुञ्जिन्छन्, हामीलाई विनम्र, बलिदानी र वास्तविक मायामा बोलाउँछन्।\n\nआज रात, माया साँच्चै कस्तो देखिन्छ भनी सम्झनुहोस्।`,
-      closing: 'विनम्र मायासहित',
+      occasion: 'मौन्डी बिहीबार 🍞',
+      emoji: '🍞',
+      greeting: 'यस अर्थपूर्ण साँझमा हामी सम्झन्छौँ,',
+      body: `यस रात येशू आफ्ना चेलाहरूसँग अन्तिम भोजमा बस्नुभयो। उहाँले रोटी तोड्नुभयो, कचौरा बाँड्नुभयो, र उनीहरूका खुट्टा धुनुभयो।
+
+यसरी उहाँले देखाउनुभयो कि साँचो महानता नम्रता, सेवा, र प्रेममा पाइन्छ। उहाँका वचनहरूले आज पनि हामीलाई एकअर्कालाई प्रेम गर्न बोलाइरहेका छन्।
+
+यो दिनले हाम्रो जीवनलाई गहिरो प्रेम, निष्ठावान सेवा, र कृतज्ञ सम्झनातर्फ डोर्‍याओस्।`,
+      closing: 'विनम्र प्रेमसहित',
     },
+
     holySaturday: {
-      occasion: 'पवित्र शनिबार 🕯️', emoji: '🕯️',
-      greeting: 'मौनतामा, हामी प्रतीक्षा गर्छौं।',
-      body: `आज चेलाहरू दुःखमा बसे, आइतबारले के ल्याउँछ थाहा नपाई। चिहान बन्द थियो। आशा गाडिएको जस्तो लाग्यो।\n\nतर परमेश्वर सकिनुभएको थिएन। उहाँ कहिल्यै सक्किनुहुन्न।\n\nतपाईंको आफ्नै मौनता र प्रतीक्षाका क्षणहरूमा, सम्झनुहोस् — आइतबार सधैं आउँदैछ। सबैभन्दा अँध्यारो रात सबैभन्दा उज्यालो बिहानीलाई ठाउँ दिन्छ।`,
+      occasion: 'पवित्र शनिबार 🕯️',
+      emoji: '🕯️',
+      greeting: 'मौनतामा, हामी आशासहित प्रतीक्षा गर्छौँ।',
+      body: `आज हामी चिहानको शान्तता र ती मानिसहरूको शोकलाई सम्झन्छौँ, जसले अझै परमेश्वरले के गर्नुहुन्छ भनेर देखेका थिएनन्।
+
+सबै कुरा स्थिर देखिए पनि, परमेश्वर काम गरिरहनुभएको थियो। मौनतामा पनि उहाँले आफ्नो प्रतिज्ञा त्याग्नुभएको थिएन।
+
+प्रतीक्षाको हरेक समयमा, पवित्र शनिबारले हामीलाई सम्झाउँछ कि परमेश्वरका हातमा आशा कहिल्यै हराउँदैन।`,
       closing: 'शान्त आशासहित',
     },
+
     default: {
-      occasion: 'ईस्टर मौसम 🐣', emoji: '🥚',
-      greeting: 'यो ईस्टर मौसममा तपाईंलाई अनुग्रह र शान्ति होस्!',
-      body: `ईस्टर चकलेट अण्डा र वसन्तका फूलभन्दा बढी हो — यो एउटा यस्तो मायाको कथा हो जुन यति गहिरो थियो कि यसले मृत्युलाई नै जित्यो।\n\nपाम आइतबारदेखि खाली चिहानसम्म, यस यात्राको हरेक कदम तपाईंको लागि चालिएको थियो। तपाईं नै कारण हुनुहुन्छ उहाँ आउनुभयो। तपाईं नै कारण हुनुहुन्छ उहाँ त्यो क्रूसमा रहनुभयो। तपाईं नै कारण हुनुहुन्छ ढुङ्गा हटाइयो।\n\nईस्टर यात्रामा स्वागत छ। यसले तपाईंको मनलाई त्यसरी बदलोस् जसरी यसले संसारलाई बदल्यो।`,
-      closing: 'ईस्टरको आशिषसहित',
+      occasion: 'ईस्टर मौसम 🐣',
+      emoji: '🥚',
+      greeting: 'यो ईस्टर मौसममा तपाईंलाई अनुग्रह र शान्ति होस्।',
+      body: `ईस्टर केवल उत्सव मात्र होइन — यो ख्रीष्टको प्रेम, बलिदान, मृत्यु, र पुनरुत्थानको सन्देश हो।
+
+पाम आइतबारदेखि खाली चिहानसम्म, यस यात्राको हरेक कदमले परमेश्वरको हृदय र येशू ख्रीष्टद्वारा प्रकट भएको उद्धारको वरदानलाई देखाउँछ।
+
+Passion of the Week 2082 मा तपाईंलाई स्वागत छ। यो यात्राले तपाईंको विश्वासलाई गहिरो बनाओस् र तपाईंको हृदयलाई शान्ति र आशाले भरिदिओस्।`,
+      closing: 'शान्ति र आनन्दको कामनासहित',
     },
   },
 };
+
 
 const getDateGreeting = (lang = 'en') => {
   const today = new Date();
