@@ -5,47 +5,69 @@ import confetti from 'canvas-confetti';
 import { FaWhatsapp, FaFacebook, FaTelegramPlane, FaTwitter, FaLink, FaTimes, FaGamepad, FaHome, FaRedo } from 'react-icons/fa';
 import { getRandomVerse, parseVerse } from '../../utils/verses';
 import { useLanguage } from '../../context/LanguageContext';
-
 const resultUi = {
   en: {
     risen: 'He is Risen!',
-    msg1: 'Death could not hold Him.',
-    msg2: 'The tomb is empty. The stone is rolled away. The grave clothes lie folded.',
-    msg3: 'He is alive — and because He lives, so do you.',
+
+    msg1: 'Death could not hold Him; the grave has lost its power.',
+    msg2: 'The tomb is empty. The stone has been rolled away. What was sealed is now opened.',
+    msg3: 'He is alive — and because He lives, hope is alive, and new life is given to you.',
+
     verseLabel: '🌅 Easter Verse',
+
     restart: 'Restart',
     home: 'Home',
     playGame: 'Play Game',
+
     share: 'Share',
     shareTitle: 'Share the Journey',
-    shareSubtitle: 'Personalise then pick a platform',
+    shareSubtitle: 'Invite someone to walk this journey of sacrifice and resurrection',
+
     fromPlaceholder: '✍️ Your name (From)',
     toPlaceholder: '💌 Friend\'s name (To)',
+
     fillBoth: 'Fill both names to enable sharing',
+
     copyBtn: 'Copy Link',
     copied: '✅ Copied!',
-    shareMsg: (from, url) => `${from} wants you to walk the Easter Journey 💌\n\n${url}`,
-    shareMsgShort: (from) => `${from} wants you to walk the Easter Journey 💌`,
+
+    shareMsg: (from, url) =>
+      `${from} invites you to walk the Passion of the Week 2082 💌\n\nFrom sacrifice to resurrection — come and experience the story.\n\n${url}`,
+
+    shareMsgShort: (from) =>
+      `${from} invites you to walk the Passion of the Week 2082 💌`,
   },
+
   ne: {
     risen: 'उहाँ जीवित हुनुहुन्छ!',
-    msg1: 'मृत्युले उहाँलाई रोक्न सकेन।',
-    msg2: 'चिहान खाली छ। ढुङ्गा गुडाइएको छ। कफन मोडिएको छ।',
-    msg3: 'उहाँ जीवित हुनुहुन्छ — र उहाँ जीवित हुनुहुन्छ भने, तपाईं पनि।',
+
+    msg1: 'मृत्युले उहाँलाई थाम्न सकेन; चिहानको शक्ति समाप्त भयो।',
+    msg2: 'चिहान खाली छ। ढुङ्गा हटाइएको छ। जे बन्द थियो, अहिले खुला भएको छ।',
+    msg3: 'उहाँ जीवित हुनुहुन्छ — र उहाँ जीवित हुनुहुन्छ भने, आशा जीवित छ र तपाईंका लागि नयाँ जीवन प्रदान गरिएको छ।',
+
     verseLabel: '🌅 ईस्टर वचन',
-    restart: 'फेरि सुरु',
+
+    restart: 'फेरि सुरु गर्नुहोस्',
     home: 'गृहपृष्ठ',
     playGame: 'खेल खेल्नुहोस्',
+
     share: 'Share गर्नुहोस्',
-    shareTitle: 'यात्रा Share गर्नुहोस्',
-    shareSubtitle: 'नाम भर्नुहोस् र प्लेटफर्म छान्नुहोस्',
+    shareTitle: 'यो यात्रा बाँड्नुहोस्',
+    shareSubtitle: 'बलिदान र पुनरुत्थानको यो यात्रामा अरूलाई पनि आमन्त्रण गर्नुहोस्',
+
     fromPlaceholder: '✍️ तपाईंको नाम (पठाउने)',
     toPlaceholder: '💌 साथीको नाम (पाउने)',
+
     fillBoth: 'Share गर्न दुवै नाम भर्नुहोस्',
+
     copyBtn: 'लिंक कपी गर्नुहोस्',
     copied: '✅ कपी भयो!',
-    shareMsg: (from, url) => `${from} ले तपाईंलाई ईस्टर यात्रामा हिँड्न आमन्त्रण गर्नुहुन्छ 💌\n\n${url}`,
-    shareMsgShort: (from) => `${from} ले तपाईंलाई ईस्टर यात्रामा हिँड्न आमन्त्रण गर्नुहुन्छ 💌`,
+
+    shareMsg: (from, url) =>
+      `${from} ले तपाईंलाई Passion of the Week 2082 को यात्रामा हिँड्न आमन्त्रण गर्नुहुन्छ 💌\n\nबलिदानदेखि पुनरुत्थानसम्म — यो कथा अनुभव गर्नुहोस्।\n\n${url}`,
+
+    shareMsgShort: (from) =>
+      `${from} ले तपाईंलाई Passion of the Week 2082 को यात्रामा हिँड्न आमन्त्रण गर्नुहुन्छ 💌`,
   },
 };
 

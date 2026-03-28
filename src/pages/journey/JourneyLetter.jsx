@@ -43,7 +43,7 @@ const DATE_GREETINGS = {
     default: {
       occasion: 'Easter Season 🐣', emoji: '🥚',
       greeting: 'Grace and peace to you this Easter season!',
-      body: `Easter is more than chocolate eggs and spring flowers — it is the story of a love so deep that it conquered death itself.\n\nFrom Palm Sunday to the empty tomb, every step of this journey was taken for you. You are the reason He came. You are the reason He stayed on that cross. You are the reason the stone was rolled away.\n\nWelcome to the Easter Journey. May it change your heart as it changed the world.`,
+      body: `Easter is more than chocolate eggs and spring flowers — it is the story of a love so deep that it conquered death itself.\n\nFrom Palm Sunday to the empty tomb, every step of this journey was taken for you. You are the reason He came. You are the reason He stayed on that cross. You are the reason the stone was rolled away.\n\nWelcome to the Passion of the Week 2082. May it change your heart as it changed the world.`,
       closing: 'With Easter blessings',
     },
   },

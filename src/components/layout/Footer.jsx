@@ -18,7 +18,7 @@ const Footer = () => {
 
         <div className="flex items-center gap-2">
           <GiEasterEgg className="text-easter-purple w-4 h-4" />
-          <span className="font-semibold text-gray-700 dark:text-gray-200">Easter Journey Game</span>
+          <span className="font-semibold text-gray-700 dark:text-gray-200">Passion of the Week 2082</span>
         </div>
 
         <p className="text-xs sm:text-sm text-center">

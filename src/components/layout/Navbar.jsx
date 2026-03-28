@@ -40,7 +40,7 @@ const Navbar = () => {
             <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
               <GiEasterEgg className="w-8 h-8 text-easter-purple" />
             </motion.div>
-            <span className="font-bold text-xl gradient-text">Easter Journey</span>
+            <span className="font-bold text-xl gradient-text">Passion of the Week 2082</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">

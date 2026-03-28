@@ -13,7 +13,7 @@ export const getCurrentEasterMessage = () => {
   const dates = getEasterDates(today.getFullYear());
 
   const events = [
-    { date: dates.palmSunday,     message: '🌿 Hosanna! Blessed is He who comes in the name of the Lord. Welcome to our Easter Journey!', color: 'from-green-400 to-yellow-400' },
+    { date: dates.palmSunday, message: '🌿 Hosanna! Blessed is He who comes in the name of the Lord. Welcome to Passion of the Week 2082!', color: 'from-green-400 to-yellow-400' },
     { date: dates.maundyThursday, message: '🍞 A new commandment I give to you: love one another as I have loved you.', color: 'from-blue-400 to-purple-400' },
     { date: dates.goodFriday,     message: '✝️ It is finished. A time for reflection and gratitude for the ultimate sacrifice.', color: 'from-gray-800 to-red-900' },
     { date: dates.holySaturday,   message: '🕯️ In the silence, we wait. The tomb is sealed, but hope remains.', color: 'from-gray-700 to-purple-900' },

@@ -155,7 +155,7 @@ const Home = () => {
         >
           <motion.div animate={{ rotate: [0, 8, -8, 0] }} transition={{ duration: 4, repeat: Infinity, repeatType: 'reverse' }}
             className="text-4xl sm:text-6xl mb-3 sm:mb-4">✝️</motion.div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 sm:mb-3">Easter Journey Experience</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 sm:mb-3">Passion of the Week 2082</h2>
           <p className="text-white/90 text-sm sm:text-lg mb-5 sm:mb-7 max-w-xl mx-auto">
             An interactive story from Palm Sunday to Resurrection. Walk the path, feel the story, and discover hope.
           </p>

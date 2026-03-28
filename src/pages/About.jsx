@@ -11,7 +11,7 @@ const fadeUp = (delay = 0) => ({
 });
 
 const features = [
-  { icon: <FaCross className="w-5 h-5" />, color: 'from-purple-400 to-pink-400', title: 'Easter Journey', desc: 'An interactive story walking through Palm Sunday to Resurrection.' },
+  { icon: <FaCross className="w-5 h-5" />, color: 'from-purple-400 to-pink-400', title: 'Passion of the Week 2082', desc: 'An interactive story walking through Palm Sunday to Resurrection.' },
   { icon: <FaGamepad className="w-5 h-5" />, color: 'from-green-400 to-yellow-400', title: 'Egg Hunt Game', desc: 'Catch eggs, avoid bombs, collect power-ups and climb the leaderboard.' },
   { icon: <FaTrophy className="w-5 h-5" />, color: 'from-yellow-400 to-orange-400', title: 'Leaderboard', desc: 'Compete with players from your church and see who tops the board.' },
 ];
@@ -33,7 +33,7 @@ const About = () => {
           <GiEasterEgg className="w-16 h-16 sm:w-20 sm:h-20 text-easter-purple drop-shadow-lg" />
         </motion.div>
         <h1 className="text-3xl sm:text-5xl font-extrabold mb-3">
-          About <span className="gradient-text">Easter Journey</span>
+          About <span className="gradient-text">Passion of the Week 2082</span>
         </h1>
         <p className="text-gray-500 dark:text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
           A full-stack MERN application built to celebrate Easter — combining faith, fun, and technology.
@@ -45,7 +45,7 @@ const About = () => {
         <div className="card border border-gray-100 dark:border-gray-700 shadow-md">
           <h2 className="text-xl sm:text-2xl font-bold mb-4 gradient-text">The Story Behind It</h2>
           <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed mb-3">
-            Easter Journey Game was built as a personal project to share the meaning of Easter in an interactive way.
+            Passion of the Week 2082 was built as a personal project to share the meaning of Easter in an interactive way.
             The idea was simple — what if people could experience the Easter story, play a fun game, and connect with
             others from their church, all in one place?
           </p>
@@ -134,7 +134,7 @@ const About = () => {
             >
               {/* FormSubmit config */}
               <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_subject" value="Easter Journey — Contact Form" />
+              <input type="hidden" name="_subject" value="Passion of the Week 2082 — Contact Form" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_next" value={`${window.location.origin}/about?sent=1`} />
               <input type="text" name="_honey" style={{ display: 'none' }} />
