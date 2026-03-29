@@ -1,16 +1,15 @@
 import api from './api';
 
-const SESSION_KEY = 'easter_visited';
+const STORAGE_KEY = 'easter_visited';
 
 const visitorService = {
-  // Call once per session — increments count and returns total
+  // Count once per device (persists across sessions via localStorage)
   async ping() {
-    // Only ping once per browser session
-    if (sessionStorage.getItem(SESSION_KEY)) {
+    if (localStorage.getItem(STORAGE_KEY)) {
       const res = await api.get('/visitors');
       return res.data.count;
     }
-    sessionStorage.setItem(SESSION_KEY, '1');
+    localStorage.setItem(STORAGE_KEY, '1');
     const res = await api.post('/visitors/ping');
     return res.data.count;
   },
