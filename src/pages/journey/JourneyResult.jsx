@@ -185,10 +185,6 @@ const JourneyResult = () => {
   const [showShare, setShowShare] = useState(false);
   const [showNudge, setShowNudge] = useState(false);
 
-  // Read from/to from URL so share form can be pre-filled
-  const searchParams = new URLSearchParams(window.location.search);
-  const urlFrom = searchParams.get('from') || '';
-  const urlTo   = searchParams.get('to')   || '';
 
   useEffect(() => {
     if (fired.current) return;
