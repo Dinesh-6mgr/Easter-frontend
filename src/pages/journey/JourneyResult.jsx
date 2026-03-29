@@ -302,7 +302,7 @@ const JourneyResult = () => {
       </motion.div>
 
       <AnimatePresence>
-        {showShare && <ShareModal onClose={() => setShowShare(false)} rt={rt} defaultFrom={urlFrom} defaultTo={urlTo} />}
+        {showShare && <ShareModal onClose={() => setShowShare(false)} rt={rt} />}
       </AnimatePresence>
 
       {/* 5-second share nudge */}
