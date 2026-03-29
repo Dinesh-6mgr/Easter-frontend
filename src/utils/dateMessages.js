@@ -1,11 +1,11 @@
 import { isSameDay } from 'date-fns';
 
 const getEasterDates = (year) => ({
-  palmSunday:     new Date(year, 3, 13),  // April 13
-  maundyThursday: new Date(year, 3, 17),  // April 17
-  goodFriday:     new Date(year, 3, 18),  // April 18
-  holySaturday:   new Date(year, 3, 19),  // April 19
-  easterSunday:   new Date(year, 3, 20)   // April 20
+  palmSunday:     new Date(year, 2, 29), // March 29
+  maundyThursday: new Date(year, 3, 2),  // April 2
+  goodFriday:     new Date(year, 3, 3),  // April 3
+  holySaturday:   new Date(year, 3, 4),  // April 4
+  easterSunday:   new Date(year, 3, 5),  // April 5
 });
 
 export const getCurrentEasterMessage = () => {
@@ -13,7 +13,7 @@ export const getCurrentEasterMessage = () => {
   const dates = getEasterDates(today.getFullYear());
 
   const events = [
-    { date: dates.palmSunday, message: '🌿 Hosanna! Blessed is He who comes in the name of the Lord. Welcome to Passion of the Week 2082!', color: 'from-green-400 to-yellow-400' },
+    { date: dates.palmSunday,     message: '🌿 Hosanna! Blessed is He who comes in the name of the Lord. Welcome to Passion of the Week 2082!', color: 'from-green-400 to-yellow-400' },
     { date: dates.maundyThursday, message: '🍞 A new commandment I give to you: love one another as I have loved you.', color: 'from-blue-400 to-purple-400' },
     { date: dates.goodFriday,     message: '✝️ It is finished. A time for reflection and gratitude for the ultimate sacrifice.', color: 'from-gray-800 to-red-900' },
     { date: dates.holySaturday,   message: '🕯️ In the silence, we wait. The tomb is sealed, but hope remains.', color: 'from-gray-700 to-purple-900' },
@@ -23,6 +23,12 @@ export const getCurrentEasterMessage = () => {
   for (const event of events) {
     if (isSameDay(today, event.date)) return event;
   }
+
+  // Holy Week range fallback (March 29 – April 5)
+  const m = today.getMonth();
+  const d = today.getDate();
+  const isHolyWeek = (m === 2 && d >= 29) || (m === 3 && d <= 5);
+  if (isHolyWeek) return events[0]; // Palm Sunday greeting during whole week
 
   return {
     message: '🕊️ Prepare your heart for the Easter celebration. Join our egg hunt and learn about the journey!',

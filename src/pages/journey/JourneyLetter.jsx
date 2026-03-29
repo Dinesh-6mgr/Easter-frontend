@@ -161,26 +161,32 @@ Passion of the Week 2082 मा तपाईंलाई स्वागत छ�
 
 const getDateGreeting = (lang = 'en') => {
   const today = new Date();
-  const month = today.getMonth();
+  // Use local date parts to avoid timezone issues
+  const month = today.getMonth(); // 0-indexed: 0=Jan, 2=Mar, 3=Apr
   const day   = today.getDate();
   const msgs  = DATE_GREETINGS[lang] ?? DATE_GREETINGS.en;
 
-  // Easter 2026 dates
+  // Easter 2026 dates (month is 0-indexed)
   const dates = {
-    palmSunday:     { m: 3, d: 29 },
-    maundyThursday: { m: 3, d: 2  },
-    goodFriday:     { m: 3, d: 3  },
-    holySaturday:   { m: 3, d: 4  },
-    easterSunday:   { m: 3, d: 5  },
+    palmSunday:     { m: 2, d: 29 }, // March 29
+    maundyThursday: { m: 3, d: 2  }, // April 2
+    goodFriday:     { m: 3, d: 3  }, // April 3
+    holySaturday:   { m: 3, d: 4  }, // April 4
+    easterSunday:   { m: 3, d: 5  }, // April 5
   };
 
   const match = (e) => month === e.m && day === e.d;
 
-  if (match(dates.easterSunday))   return msgs.easterSunday;
-  if (match(dates.goodFriday))     return msgs.goodFriday;
   if (match(dates.palmSunday))     return msgs.palmSunday;
   if (match(dates.maundyThursday)) return msgs.maundyThursday;
+  if (match(dates.goodFriday))     return msgs.goodFriday;
   if (match(dates.holySaturday))   return msgs.holySaturday;
+  if (match(dates.easterSunday))   return msgs.easterSunday;
+
+  // Holy Week range fallback: March 29 – April 5 show Palm Sunday greeting
+  const isHolyWeek = (month === 2 && day >= 29) || (month === 3 && day <= 5);
+  if (isHolyWeek) return msgs.palmSunday;
+
   return msgs.default;
 };
 
