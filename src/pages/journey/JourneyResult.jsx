@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { FaWhatsapp, FaFacebook, FaTelegramPlane, FaTwitter, FaLink, FaTimes, FaGamepad, FaHome, FaRedo } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebook, FaFacebookMessenger, FaTwitter, FaLink, FaTimes, FaGamepad, FaHome, FaRedo } from 'react-icons/fa';
 import { getRandomVerse, parseVerse } from '../../utils/verses';
 import { useLanguage } from '../../context/LanguageContext';
 const resultUi = {
@@ -78,8 +78,8 @@ const platforms = [
     build: (u, from, rt) => `https://wa.me/?text=${encodeURIComponent(rt.shareMsg(from, u))}` },
   { name: 'Facebook',    icon: <FaFacebook className="w-4 h-4" />,      color: 'bg-blue-600 hover:bg-blue-700',
     build: (u) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}` },
-  { name: 'Telegram',    icon: <FaTelegramPlane className="w-4 h-4" />, color: 'bg-sky-500 hover:bg-sky-600',
-    build: (u, from, rt) => `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(rt.shareMsgShort(from))}` },
+  { name: 'Messenger',    icon: <FaFacebookMessenger className="w-4 h-4" />, color: 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700',
+    build: (u) => `https://www.facebook.com/dialog/send?link=${encodeURIComponent(u)}&app_id=291494419107518&redirect_uri=${encodeURIComponent(u)}` },
   { name: 'Twitter / X', icon: <FaTwitter className="w-4 h-4" />,       color: 'bg-gray-900 hover:bg-black',
     build: (u, from, rt) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(rt.shareMsgShort(from))}&url=${encodeURIComponent(u)}` },
 ];

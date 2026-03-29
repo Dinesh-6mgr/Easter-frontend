@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaWhatsapp, FaFacebook, FaTelegramPlane, FaTwitter, FaLink, FaTimes } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebook, FaFacebookMessenger, FaTwitter, FaLink, FaTimes } from 'react-icons/fa';
 import { useLanguage } from '../../context/LanguageContext';
 import { getPlayer } from '../../components/game/PlayerSetupModal';
 
@@ -259,10 +259,10 @@ const platforms = [
     build: (url) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
   },
   {
-    name: 'Telegram',
-    icon: <FaTelegramPlane className="w-4 h-4" />,
-    color: 'bg-sky-500 hover:bg-sky-600',
-    build: (url, from, c) => `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(c.shareMsgShort(from))}`,
+    name: 'Messenger',
+    icon: <FaFacebookMessenger className="w-4 h-4" />,
+    color: 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700',
+    build: (url) => `https://www.facebook.com/dialog/send?link=${encodeURIComponent(url)}&app_id=291494419107518&redirect_uri=${encodeURIComponent(url)}`,
   },
   {
     name: 'Twitter / X',
