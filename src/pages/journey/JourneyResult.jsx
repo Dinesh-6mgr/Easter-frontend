@@ -79,7 +79,7 @@ const platforms = [
   { name: 'Facebook',    icon: <FaFacebook className="w-4 h-4" />,      color: 'bg-blue-600 hover:bg-blue-700',
     build: (u) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}` },
   { name: 'Messenger',    icon: <FaFacebookMessenger className="w-4 h-4" />, color: 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700',
-    build: (u) => `https://www.facebook.com/dialog/send?link=${encodeURIComponent(u)}&app_id=291494419107518&redirect_uri=${encodeURIComponent(u)}` },
+    build: (u) => `fb-messenger://share?link=${encodeURIComponent(u)}` },
   { name: 'Twitter / X', icon: <FaTwitter className="w-4 h-4" />,       color: 'bg-gray-900 hover:bg-black',
     build: (u, from, rt) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(rt.shareMsgShort(from))}&url=${encodeURIComponent(u)}` },
 ];

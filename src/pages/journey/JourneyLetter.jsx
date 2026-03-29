@@ -262,7 +262,7 @@ const platforms = [
     name: 'Messenger',
     icon: <FaFacebookMessenger className="w-4 h-4" />,
     color: 'bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700',
-    build: (url) => `https://www.facebook.com/dialog/send?link=${encodeURIComponent(url)}&app_id=291494419107518&redirect_uri=${encodeURIComponent(url)}`,
+    build: (url) => `fb-messenger://share?link=${encodeURIComponent(url)}`,
   },
   {
     name: 'Twitter / X',
